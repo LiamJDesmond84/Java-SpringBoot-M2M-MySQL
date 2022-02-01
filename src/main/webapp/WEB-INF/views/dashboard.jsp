@@ -34,6 +34,7 @@
 <!-- 				<th>Likes</th> -->
 				<th>Transmission</th>
 				<th>Owner</th>
+				<th>Registered</th>
 				<th>Action</th>
 			</tr>
 			</thead>
@@ -54,6 +55,17 @@
 
 
 				<td><a href="/user/show/${x.owner.id}">${x.owner.firstName}</a></td>
+				
+												<%--If/Else--%>
+				<c:choose>
+					<c:when test="${x.title == null}">
+						<td>No</td>
+					</c:when>
+					<c:otherwise>
+						<td>Yes</td>
+					</c:otherwise>
+				</c:choose>
+												<%--If/Else End--%>
 				
 				<c:if test="${x.owner.id == userLog.id}">
 					<td><a href="/delete/serf/${x.id}">Delete</a></td>

@@ -23,28 +23,43 @@
 
 </div>
 
-
+<div class="container d-flex flex-row">
 <div class="container d-flex flex-column justify-content-center align-items-center">
+	<table class="table table-striped mt-2">
+		<tbody>
+			<tr>
+				<th scope="row">Make:</th>
+				<td>${car.make}</<td>
+			</tr>
+			<tr>
+				<th scope="row">Model:</th>
+				<td>${car.model}</<td>
+			</tr>
+			<tr>
+				<th scope="row">Color:</th>	
+				<td>${car.color}</td>
+			</tr>
+			<tr>
+				<th scope="row">Year:</th>	
+				<td>${car.year}</td>
+			</tr>
+			<tr>
+				<th scope="row">Transmission:</th>	
+				<td>${car.transmission}</td>
+			</tr>
 
-	<h3>Make:</h3>
-	<p>${car.make}
-	<h3>Model:</h3>
-	<p>${car.model}</p>
-	<h3>Color:</h3>
-	<p>${car.color}</p>
-	
-	<h3>Year:</h3>
-	<p>${car.year}</p>
-	<h3>Transmission:</h3>
-	<p>${car.transmission}</p>
+
+
+		</tbody>
+	</table>
 <%-- 	<h3>Toys</h3>
 	<ol>
 		<c:forEach items="${car.toys}" var="x">
 		<li>${x.name} ($${x.price}) - ${x.description}</li>
 		</c:forEach>
 	</ol> --%>
-	<h3>Liked by:</h3>
-<%-- 	<ol>
+<%--	<h3>Liked by:</h3>
+ 	<ol>
 		<c:forEach items="${car.rsvpers}" var="x">
 		<li>${x.firstName} ${x.lastName}</li>
 		</c:forEach>
@@ -53,36 +68,52 @@
 	<p><a href="/user/show/${car.owner.id}">${car.owner.firstName}</a></p>
 	
 <c:if test="${car.owner.id == userLog.id}">
-<a href="/edit/serf/${car.id}" class="btn btn-warning">Edit</a>
+	<a href="/edit/serf/${car.id}" class="btn btn-warning">Edit</a>
+	<button onclick="location.href=`/delete/serf/${car.id}`" class="btn btn-danger">Delete</button>
 </c:if>
-<%--<form:form action="/edit/serf/${car.id}" method="POST" modelAttribute="car">
-<c:if test="${car.owner.id == userLog.id}">
+
+
+<%-- <c:if test="${car.owner.id == userLog.id}">
+<form:form action="/edit/serf/proc/${car.id}" method="POST" modelAttribute="car">
+		<form:input type="hidden" value="${car.owner.id}" path="owner" />
 <br/>
-<h3>Edit Dog</h3>
-	
+
+<h3>Edit Details</h3>	
 		<div class="form-group">
-			<form:label path="name">Name:</form:label>
-			<form:errors path="name" />
-			<form:input path="name" />
+			<form:label path="make">Make:</form:label>
+			<form:errors path="make" class="text-danger" />
+			<form:input path="make" />
 		</div>
 		<div class="form-group">
-			<form:label path="breed">Breed:</form:label>
-			<form:errors path="breed" />
-			<form:input path="breed" />
+			<form:label path="model">Model:</form:label>
+			<form:errors path="model" class="text-danger" />
+			<form:input path="model" />
 		</div>
 		<div class="form-group">
-			<form:label path="age">Age:</form:label>
-			<form:errors path="age" />
-			<form:input path="age" />
+			<form:label path="color">Color:</form:label>
+			<form:errors path="color" class="text-danger" />
+			<form:input path="color" />
 		</div>
-		<button>Update ${car.name}'s Details</button>
-</c:if>
-</form:form>--%>
+		<div class="form-group">
+			<form:label path="year">Year:</form:label>
+			<form:errors path="year" class="text-danger" />
+			<form:input type="number" path="year" />
+		</div>
+		<div class="form-group">
+			<form:label path="transmission">Transmission:</form:label>
+			<form:errors path="transmission" class="text-danger" />
+			<form:input path="transmission" />
+		</div>
+		<button>Update Details</button>
+</form:form>
+</c:if> --%>
+
+
 </div>
 
 
+						<%--If/Else--%>
 <div class="container d-flex flex-column justify-content-center align-items-center">
-<%--If/Else--%>
 <c:choose>
 <c:when test="${ car.title != null }">
 <h2>Tag Details</h2>
@@ -94,22 +125,22 @@
 </c:when>
 <c:otherwise>
 <div class="container">
-	<h2>This car needs a Title:</h2>
+	<h2>Register This Vehicle:</h2>
 	<form:form action="/addOneToOne/${car.id}" method="POST" modelAttribute="title">
 		<div class="form-group">
 			<form:label path="city">City:</form:label>
-			<form:errors path="city" />
+			<form:errors path="city" class="text-danger" />
 			<form:input path="city" />
 		</div>
 		<br/>
 		<div class="form-group">
 			<form:label path="state">State:</form:label>
-			<form:errors path="state" />
+			<form:errors path="state" class="text-danger" />
 			<form:input path="state" />
 		</div>
 		<div class="form-group">
 			<form:label path="vin">VIN Number:</form:label>
-			<form:errors path="vin" />
+			<form:errors path="vin" class="text-danger" />
 			<form:input path="vin" />
 		</div>
 		<form:hidden path="car" value="${car.id}"/>
@@ -119,8 +150,9 @@
 </div>
 </c:otherwise>
 </c:choose>
-<%-- If/Else End --%>
 </div>
+						<%-- If/Else End --%>
 
+</div>
 </body>
 </html>

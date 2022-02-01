@@ -52,10 +52,11 @@
 		</div>
 		<br/>
 
-		<button>Edit</button>
+		<button class="btn btn-warning">Edit</button>
 		
-		<a href="/serf/show/${car.id}" class="btn btn-danger">Back</a>
 	</form:form>
+		<a href="/serf/show/${car.id}" class="btn btn-primary">Back</a>
+	<button onclick="location.href=`/delete/serf/${car.id}`" class="btn btn-danger">Delete</button>
 	</div>
 
 

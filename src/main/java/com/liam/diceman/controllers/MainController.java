@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
@@ -197,7 +196,7 @@ public class MainController {
 //	                                                   
 
 	
-	@RequestMapping("/addOneToOne/{id}") // Add one to Main Processing
+	@PostMapping("/addOneToOne/{id}") // Add one to Main Processing
 	public String addOneToOne(@PathVariable("id") Long id, @Valid @ModelAttribute("title") Title title, BindingResult result, Model viewModel, HttpSession session) {
 		if (result.hasErrors()) {
 			Long userId = (Long) session.getAttribute("user_id");
@@ -273,12 +272,16 @@ public class MainController {
 	return "redirect:/";
 	}
 	
-//  _________.__    .___      
-// /   _____/|__| __| _/____  
-// \_____  \ |  |/ __ |/ __ \ 
-// /        \|  / /_/ \  ___/ 
-///_______  /|__\____ |\___  >
-//        \/         \/    \/ 
+
+
+//    __  ___      _                   _ __  __       ____                __           __  ___                 
+//   /  |/  /___ _(_)___     _      __(_) /_/ /_     / __ \____  ___     / /_____     /  |/  /___ _____  __  __
+//  / /|_/ / __ `/ / __ \   | | /| / / / __/ __ \   / / / / __ \/ _ \   / __/ __ \   / /|_/ / __ `/ __ \/ / / /
+// / /  / / /_/ / / / / /   | |/ |/ / / /_/ / / /  / /_/ / / / /  __/  / /_/ /_/ /  / /  / / /_/ / / / / /_/ / 
+///_/  /_/\__,_/_/_/ /_/    |__/|__/_/\__/_/ /_/   \____/_/ /_/\___/   \__/\____/  /_/  /_/\__,_/_/ /_/\__, /  
+//                                                                                                    /____/   
+
+
   
 
   // ONE:MANY ///////////////////

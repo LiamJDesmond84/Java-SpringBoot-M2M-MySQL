@@ -45,22 +45,22 @@ public class CarService {
 			
 			// Many to Many
 			
-//			// Add liker
-//			public void addRSVP(User user, Car car) {
+//			// Add -thing-
+//			public void addExtra(User user, Car car) {
 //				// Get array list of Users from car object
-//				List<User> likers = car.getRsvpers();
+//				List<User> adders = car.getRatings();
 //				// Add User to list
-//				likers.add(user);
+//				likers.add(adders);
 //				// Update the Database
 //				this.carRepo.save(car);
 //			}
 //			
-//			// Remove liker
-//			public void removeRSVP(User user, Car car) {
+//			// Remove -thing-
+//			public void removeExtra(User user, Car car) {
 //				// Get array list of Users from car object
-//				List<User> likers = car.getRsvpers();
+//				List<User> adders = car.getRatings();
 //				// Add User to list
-//				likers.remove(user);
+//				likers.remove(adders);
 //				// Update the Database
 //				this.carRepo.save(car);
 //			}
