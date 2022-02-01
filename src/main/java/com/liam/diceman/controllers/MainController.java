@@ -11,13 +11,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
 import com.liam.diceman.models.Car;
 import com.liam.diceman.models.LoginUser;
+import com.liam.diceman.models.Title;
 import com.liam.diceman.models.User;
 import com.liam.diceman.services.CarService;
+import com.liam.diceman.services.TitleService;
 import com.liam.diceman.services.UserService;
 
 @Controller
@@ -29,6 +32,8 @@ public class MainController {
 	@Autowired
 	private CarService mainServ;
 	
+	@Autowired
+	private TitleService soloServ;
 
 	
 
@@ -61,13 +66,13 @@ public class MainController {
 	
 	// Show One Serf
 	@GetMapping("/serf/show/{id}") // Show car
-	public String showOne(@PathVariable("id") Long id, @ModelAttribute("car") Car car, Model viewModel, HttpSession session) {
+	public String showOne(@PathVariable("id") Long id, @ModelAttribute("car") Car car, Model viewModel, HttpSession session, @ModelAttribute("title") Title title) {
 		if (session.getAttribute("user_id") == null) {
 			return "redirect:/";
 		}
 		Long userId = (Long) session.getAttribute("user_id");
 
-				
+		viewModel.addAttribute("car", this.mainServ.getOne(id));
 		viewModel.addAttribute("userLog", this.userServ.getUser(userId));
 		viewModel.addAttribute("car", mainServ.getOne(id));
 		return "views/showSerf.jsp";
@@ -182,8 +187,30 @@ public class MainController {
 		return "redirect:/dashboard";
 	}
 	
+
+
+//	   ____                __           ____           
+//	  / __ \____  ___     / /_____     / __ \____  ___ 
+//	 / / / / __ \/ _ \   / __/ __ \   / / / / __ \/ _ \
+//	/ /_/ / / / /  __/  / /_/ /_/ /  / /_/ / / / /  __/
+//	\____/_/ /_/\___/   \__/\____/   \____/_/ /_/\___/ 
+//	                                                   
+
 	
-	
+	@RequestMapping("/addOneToOne/{id}") // Add one to Main Processing
+	public String addOneToOne(@PathVariable("id") Long id, @Valid @ModelAttribute("title") Title title, BindingResult result, Model viewModel, HttpSession session) {
+		if (result.hasErrors()) {
+			Long userId = (Long) session.getAttribute("user_id");
+
+			viewModel.addAttribute("car", this.mainServ.getOne(id));
+			viewModel.addAttribute("userLog", this.userServ.getUser(userId));
+			viewModel.addAttribute("car", mainServ.getOne(id));
+			return "views/showSerf.jsp";
+		}
+		soloServ.createOne(title);
+		return "redirect:/serf/show/{id}";
+		
+	}
 	
 
 //	 ____ ___                    

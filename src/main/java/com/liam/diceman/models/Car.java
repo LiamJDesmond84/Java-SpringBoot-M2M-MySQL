@@ -2,6 +2,7 @@ package com.liam.diceman.models;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
@@ -56,15 +58,27 @@ public class Car {
 	private Date updatedAt;
 	
 	
+	
+	
+	// One to One
+	@OneToOne(mappedBy="car",cascade = CascadeType.ALL, fetch=FetchType.LAZY)
+	private Title title;
+	
 	// Many to One
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="user_id")
 	private User owner;
 	
+	
+	
+	
 	public Car() {
 	}
 	
 
+	
+	
+	
 	@PrePersist
 	protected void onCreate() {
 		this.createdAt = new Date();
@@ -163,6 +177,22 @@ public class Car {
 
 	public void setOwner(User owner) {
 		this.owner = owner;
+	}
+
+
+
+
+
+	public Title getTitle() {
+		return title;
+	}
+
+
+
+
+
+	public void setTitle(Title title) {
+		this.title = title;
 	}
 	
 	

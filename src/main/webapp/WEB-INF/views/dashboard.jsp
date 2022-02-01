@@ -16,10 +16,13 @@
 		<h2>Welcome ${userLog.firstName}!</h2>
 	</div>
 	<a href="/logout">Logout</a>
-	<div class="container">
-			<button onclick="location.href=`/newSerfForm`" class="btn btn-success">Add Car</button>
-		<%--<a href="toys/new">Add Toy</a>--%>
+	<div class="d-flex flex-column justify-content-center align-items-center">
 		<h1>List</h1>
+	</div>
+	<div class="container">
+	
+			<button onclick="location.href=`/newSerfForm`" class="btn btn-success mb-2">Add Car</button>
+		<%--<a href="toys/new">Add Toy</a>--%>
 		<table class="table table-dark">
 			<thead>
 			<tr>

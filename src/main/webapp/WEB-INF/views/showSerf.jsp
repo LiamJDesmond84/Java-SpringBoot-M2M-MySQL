@@ -83,19 +83,19 @@
 
 <div class="container d-flex flex-column justify-content-center align-items-center">
 <%--If/Else--%>
-<%-- <c:choose>
-<c:when test="${ car.tag != null }">
+<c:choose>
+<c:when test="${ car.title != null }">
 <h2>Tag Details</h2>
 	<h4>City:</h4>
-	<p>${car.tag.city}</p>
+	<p>${car.title.city}</p>
 	<h4>State:</h4>
-	<p>${car.tag.state}</p>
+	<p>${car.title.state}</p>
 	
 </c:when>
 <c:otherwise>
 <div class="container">
-	<h2>Dog needs to be registered:</h2>
-	<form:form action="/addTag" method="POST" modelAttribute="tag">
+	<h2>This car needs a Title:</h2>
+	<form:form action="/addOneToOne/${car.id}" method="POST" modelAttribute="title">
 		<div class="form-group">
 			<form:label path="city">City:</form:label>
 			<form:errors path="city" />
@@ -107,13 +107,18 @@
 			<form:errors path="state" />
 			<form:input path="state" />
 		</div>
+		<div class="form-group">
+			<form:label path="vin">VIN Number:</form:label>
+			<form:errors path="vin" />
+			<form:input path="vin" />
+		</div>
 		<form:hidden path="car" value="${car.id}"/>
 		<br/>
-		<button>Register ${car.name}</button>
+		<button>Add Title to ${car.make} ${car.model}</button>
 	</form:form>
 </div>
 </c:otherwise>
-</c:choose>--%>
+</c:choose>
 <%-- If/Else End --%>
 </div>
 
