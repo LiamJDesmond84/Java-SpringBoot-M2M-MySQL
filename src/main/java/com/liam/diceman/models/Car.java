@@ -1,6 +1,7 @@
 package com.liam.diceman.models;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
@@ -69,7 +71,9 @@ public class Car {
 	@JoinColumn(name="user_id")
 	private User owner;
 	
-	
+	// One to Many
+	@OneToMany(mappedBy="mainOwner", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	private List<Accessory> accessories;
 	
 	
 	public Car() {
@@ -193,6 +197,22 @@ public class Car {
 
 	public void setTitle(Title title) {
 		this.title = title;
+	}
+
+
+
+
+
+	public List<Accessory> getAccessories() {
+		return accessories;
+	}
+
+
+
+
+
+	public void setAccessories(List<Accessory> accessories) {
+		this.accessories = accessories;
 	}
 	
 	

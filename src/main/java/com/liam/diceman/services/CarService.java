@@ -17,28 +17,28 @@ public class CarService {
 	
 	// Get All
 			public List<Car> getAll() {
-				return this.carRepo.findAll();
+				return carRepo.findAll();
 			}
 			
 			// Get One
 			public Car getOne(Long id) {
-				return this.carRepo.findById(id).orElse(null);
+				return carRepo.findById(id).orElse(null);
 			}
 			
 			// Create
 			public Car createOne(Car car) {
-				return this.carRepo.save(car);
+				return carRepo.save(car);
 			}
 			
 			
 			// Update
 			public Car updateOne(Car car) {
-				return this.carRepo.save(car);
+				return carRepo.save(car);
 			}
 			
 			// Delete
 			public void deleteOne(Long id) {
-				this.carRepo.deleteById(id);
+				carRepo.deleteById(id);
 			}
 			
 			

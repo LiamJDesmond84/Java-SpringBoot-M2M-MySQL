@@ -1,5 +1,7 @@
 package com.liam.diceman.controllers;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -13,11 +15,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
+import com.liam.diceman.models.Accessory;
 import com.liam.diceman.models.Car;
 import com.liam.diceman.models.LoginUser;
 import com.liam.diceman.models.Title;
 import com.liam.diceman.models.User;
+import com.liam.diceman.services.AccessoryService;
 import com.liam.diceman.services.CarService;
 import com.liam.diceman.services.TitleService;
 import com.liam.diceman.services.UserService;
@@ -30,6 +33,9 @@ public class MainController {
 	
 	@Autowired
 	private CarService mainServ;
+	
+	@Autowired
+	private AccessoryService sideServ;
 	
 	@Autowired
 	private TitleService soloServ;
@@ -57,7 +63,7 @@ public class MainController {
 		User userLog = userServ.getUser(userId);
 		viewModel.addAttribute("userLog", userLog);
 		
-		viewModel.addAttribute("allSerfs", this.mainServ.getAll());
+		viewModel.addAttribute("allSerfs", mainServ.getAll());
 		
 		return "views/dashboard.jsp";
 	}
@@ -69,10 +75,10 @@ public class MainController {
 		if (session.getAttribute("user_id") == null) {
 			return "redirect:/";
 		}
+		
 		Long userId = (Long) session.getAttribute("user_id");
 
-		viewModel.addAttribute("car", this.mainServ.getOne(id));
-		viewModel.addAttribute("userLog", this.userServ.getUser(userId));
+		viewModel.addAttribute("userLog", userServ.getUser(userId));
 		viewModel.addAttribute("car", mainServ.getOne(id));
 		return "views/showSerf.jsp";
 	}
@@ -96,9 +102,9 @@ public class MainController {
 		}
 		
 		Long userId = (Long) session.getAttribute("user_id");
-		newSerf.setOwner(this.userServ.getUser(userId));
+		newSerf.setOwner(userServ.getUser(userId));
 		
-		this.mainServ.createOne(newSerf);
+		mainServ.createOne(newSerf);
 		return "redirect:/dashboard";
 	}
 	
@@ -114,7 +120,7 @@ public class MainController {
 		User userLog = userServ.getUser(userId);
 		viewModel.addAttribute("userLog", userLog);
 		
-		viewModel.addAttribute("car", this.mainServ.getOne(id));
+		viewModel.addAttribute("car", mainServ.getOne(id));
 		return "views/editSerf.jsp";
 		
 	}
@@ -126,12 +132,13 @@ public class MainController {
 
 			Long userId = (Long) session.getAttribute("user_id");
 			User userLog = userServ.getUser(userId);
+			
 			viewModel.addAttribute("userLog", userLog);
-			viewModel.addAttribute("car", this.mainServ.getOne(id));
+			viewModel.addAttribute("car", mainServ.getOne(id));
 			return "views/editSerf.jsp";
 		}
 		serf.setOwner(user);
-		this.mainServ.updateOne(serf);
+		mainServ.updateOne(serf);
 		return "redirect:/serf/show/{id}";
 	}
 	
@@ -139,18 +146,23 @@ public class MainController {
 	// Delete Serf
 	@GetMapping("/delete/serf/{id}") // Delete car (from index page)
 	public String deleteSerf(@PathVariable("id") Long id) {
-		this.mainServ.deleteOne(id);
+		mainServ.deleteOne(id);
 		return "redirect:/dashboard";
 	}
 	
 //	@PostMapping("/edit/{id}") // edit FROM show car PAGE
-//	public String updateOne(@PathVariable("id") Long id, @Valid @ModelAttribute("car") Car updatedCar, BindingResult result, @ModelAttribute("tag") Tag tag, Model viewModel){
+//	public String updateOne(@PathVariable("id") Long id, @Valid @ModelAttribute("car") Car updatedCar, BindingResult result, @RequestParam("owner") User user, Model viewModel, HttpSession session, @ModelAttribute("title") Title title){
 //		if (result.hasErrors()) {
-//			viewModel.addAttribute("car", this.mainServ.getOne(id));
-//			return "show.jsp";
+
+//			Long userId = (Long) session.getAttribute("user_id");
+//			User userLog = userServ.getUser(userId);
+//			
+//			viewModel.addAttribute("userLog", userLog);
+//			viewModel.addAttribute("car", mainServ.getOne(id));
+//			return "views/editSerf.jsp";
 //		}
 //		this.mainServ.updateOne(updatedCar);
-//		return "redirect:/" + id;
+//		return "redirect:/serf/show/{id}";
 //	}
 	
 
@@ -167,7 +179,7 @@ public class MainController {
 	@GetMapping("/rsvp/{id}")
 	public String RSVP(@PathVariable("id") Long id, HttpSession session) {
 		Long userId = (Long) session.getAttribute("user_id");
-		User rspvr = this.userServ.getUser(userId);
+		User rspvr = userServ.getUser(userId);
 //		Long petId = id;
 		Car rspvdCar = mainServ.getOne(id);
 //		this.mainServ.addRSVP(rspvr, rspvdCar);
@@ -179,7 +191,7 @@ public class MainController {
 	@GetMapping("/unrsvp/{id}")
 	public String unRSVP(@PathVariable("id") Long id, HttpSession session) {
 		Long userId = (Long) session.getAttribute("user_id");
-		User rspvr = this.userServ.getUser(userId);
+		User rspvr = userServ.getUser(userId);
 //		Long petId = id;
 		Car rspvdCar = mainServ.getOne(id);
 //		this.mainServ.removeRSVP(rspvr, rspvdCar);
@@ -201,8 +213,8 @@ public class MainController {
 		if (result.hasErrors()) {
 			Long userId = (Long) session.getAttribute("user_id");
 
-			viewModel.addAttribute("car", this.mainServ.getOne(id));
-			viewModel.addAttribute("userLog", this.userServ.getUser(userId));
+			viewModel.addAttribute("car", mainServ.getOne(id));
+			viewModel.addAttribute("userLog", userServ.getUser(userId));
 			viewModel.addAttribute("car", mainServ.getOne(id));
 			return "views/showSerf.jsp";
 		}
@@ -260,8 +272,10 @@ public class MainController {
 		if (session.getAttribute("user_id") == null) {
 			return "redirect:/";
 		}
-    	
-    	model.addAttribute("user", this.userServ.getUser(id));
+		
+		Long userId = (Long) session.getAttribute("user_id");
+		model.addAttribute("userLog", userServ.getUser(userId));
+    	model.addAttribute("user", userServ.getUser(id));
         return "views/showUser.jsp";
     }
     
@@ -282,34 +296,40 @@ public class MainController {
 //                                                                                                    /____/   
 
 
+	
+	
+	
+	
+	
+
   
 
-  // ONE:MANY ///////////////////
+	// ONE:MANY ///////////////////
   
-//  // Side form
-//  @RequestMapping("/answers/new")
-//  public String newSideForm(@ModelAttribute("answer") Answer obj, Model model) {
-//      List<Question> everything = mainServ.getAll();
-//      model.addAttribute("questions", everything);
-//      return "/views/newSide.jsp";
-//  }
-//  
-//  
-//  
-//  
-//  // Create Side Processing with MAIN dropdown
-//  @RequestMapping(value="/create/answer", method=RequestMethod.POST)
-//  public String createSide(@Valid @ModelAttribute("answer") Answer obj, BindingResult result, Model model) {
-////  	Long questionId = obj.getQuestion().getId();
-//      if (result.hasErrors()) {
-//          List<Question> everything = mainServ.getAll();
-//          model.addAttribute("questions", everything);
-//          return "/views/newSide.jsp";
-//      } else {
-//      	mainServ.createSide(obj);
-//          return String.format("redirect:/questions/show/%s", obj.getQuestion().getId());
-//      }
-//  }
+	// Side form
+	@GetMapping("/sides/new")
+	public String newSideForm(@ModelAttribute("accessory") Accessory access, Model model, HttpSession session) {	  
+		List<Car> everything = mainServ.getAll();
+		Long userId = (Long) session.getAttribute("user_id");
+		
+		model.addAttribute("userLog", userServ.getUser(userId));
+		model.addAttribute("everything", everything);
+		return "/views/newSide.jsp";
+	}
+
+	// Create Side Processing with MAIN dropdown
+	@PostMapping("/create/side")
+	public String createSide(@Valid @ModelAttribute("accessory") Accessory access, BindingResult result, Model model, HttpSession session) {
+		//  	Long questionId = obj.getQuestion().getId();
+		if(result.hasErrors()) {
+		List<Car> everything = mainServ.getAll();
+		model.addAttribute("questions", everything);
+		return "/views/newSide.jsp";
+	}
+		sideServ.createOne(access);
+		return String.format("redirect:/serf/show/%s", access.getMainOwner().getId());
+	}
+ 
 //  
 //
 //  

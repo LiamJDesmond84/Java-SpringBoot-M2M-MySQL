@@ -17,28 +17,33 @@
 	
 		<div class="form-group">
 			<form:label path="make">Make:</form:label>
-			<form:errors path="make" class="text-danger" />
 			<form:input path="make" />
+			<br/>
+			<form:errors path="make" class="text-danger" />
 		</div>
 		<div class="form-group">
 			<form:label path="model">Model:</form:label>
-			<form:errors path="model" class="text-danger" />
 			<form:input path="model" />
+			<br/>
+			<form:errors path="model" class="text-danger" />
 		</div>
 		<div class="form-group">
 			<form:label path="color">Color:</form:label>
-			<form:errors path="color" class="text-danger" />
 			<form:input path="color" />
+			<br/>
+			<form:errors path="color" class="text-danger" />
 		</div>
 		<div class="form-group">
 			<form:label path="year">Year:</form:label>
-			<form:errors path="year" class="text-danger" />
 			<form:input type="number" path="year" />
+			<br/>
+			<form:errors path="year" class="text-danger" />
 		</div>
 		<div class="form-group">
 			<form:label path="transmission">Transmission:</form:label>
-			<form:errors path="transmission" class="text-danger" />
 			<form:input path="transmission" />
+			<br/>
+			<form:errors path="transmission" class="text-danger" />
 		</div>
 		<button>Create</button>
 

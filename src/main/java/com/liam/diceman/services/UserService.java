@@ -30,6 +30,7 @@ public class UserService {
 		return user;
 	}
 	
+	// Create One
 	public User register(User newUser, BindingResult result) {
         if(userRepo.findByEmail(newUser.getEmail()).isPresent()) {
             result.rejectValue("email", "Unique", "This email is already in use!");
@@ -46,6 +47,7 @@ public class UserService {
         }
     }
     
+	// Login
     public User login(LoginUser newLogin, BindingResult result) {
         if(result.hasErrors()) {
             return null;

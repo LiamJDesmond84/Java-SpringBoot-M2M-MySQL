@@ -17,28 +17,28 @@ public class TitleService {
 	
 	// Get All
 	public List<Title> getAll() {
-		return this.titleRepo.findAll();
+		return titleRepo.findAll();
 	}
 	
 	// Get One
 	public Title getOne(Long id) {
-		return this.titleRepo.findById(id).orElse(null);
+		return titleRepo.findById(id).orElse(null);
 	}
 	
 	// Create
 	public Title createOne(Title title) {
-		return this.titleRepo.save(title);
+		return titleRepo.save(title);
 	}
 	
 	
 	// Update
 	public Title updateOne(Title title) {
-		return this.titleRepo.save(title);
+		return titleRepo.save(title);
 	}
 	
 	// Delete
 	public void deleteOne(Long id) {
-		this.titleRepo.deleteById(id);
+		titleRepo.deleteById(id);
 	}
 
 }

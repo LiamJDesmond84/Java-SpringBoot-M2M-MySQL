@@ -52,12 +52,12 @@
 
 		</tbody>
 	</table>
-<%-- 	<h3>Toys</h3>
+	<h3>Accessories</h3>
 	<ol>
-		<c:forEach items="${car.toys}" var="x">
+		<c:forEach items="${car.accessories}" var="x">
 		<li>${x.name} ($${x.price}) - ${x.description}</li>
 		</c:forEach>
-	</ol> --%>
+	</ol>
 <%--	<h3>Liked by:</h3>
  	<ol>
 		<c:forEach items="${car.rsvpers}" var="x">
@@ -65,13 +65,14 @@
 		</c:forEach>
 	</ol> --%>
 	<h3>Owner:</h3>
-	<p><a href="/user/show/${car.owner.id}">${car.owner.firstName}</a></p>
+	<p><a href="/user/show/${car.owner.id}">${car.owner.firstName} ${car.owner.lastName}</a></p>
 	
 <c:if test="${car.owner.id == userLog.id}">
-	<a href="/edit/serf/${car.id}" class="btn btn-warning">Edit</a>
-	<button onclick="location.href=`/delete/serf/${car.id}`" class="btn btn-danger">Delete</button>
+	<div class="container d-flex flex-row justify-content-center">
+		<a href="/edit/serf/${car.id}" class="btn btn-warning">Edit</a>
+		<button onclick="location.href=`/delete/serf/${car.id}`" class="btn btn-danger">Delete</button>
+	</div>
 </c:if>
-
 
 <%-- <c:if test="${car.owner.id == userLog.id}">
 <form:form action="/edit/serf/proc/${car.id}" method="POST" modelAttribute="car">

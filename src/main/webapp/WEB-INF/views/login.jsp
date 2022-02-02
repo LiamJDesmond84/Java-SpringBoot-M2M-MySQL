@@ -17,26 +17,32 @@
 	        <div class="form-group">
 	            <label>First Name:</label>
 	            <form:input path="firstName" class="form-control" />
+	            <br/>
 	            <form:errors path="firstName" class="text-danger" />
 	        </div>
 	        <div class="form-group">
 	            <label>Last Name:</label>
 	            <form:input path="lastName" class="form-control" />
+	            <br/>
 	            <form:errors path="lastName" class="text-danger" />
+	            <br/>
 	        </div>
 	        <div class="form-group">
 	            <label>Email:</label>
 	            <form:input path="email" class="form-control" />
+	            <br/>
 	            <form:errors path="email" class="text-danger" />
 	        </div>
 	        <div class="form-group">
 	            <label>Password:</label>
 	            <form:password path="password" class="form-control" />
+	            <br/>
 	            <form:errors path="password" class="text-danger" />
 	        </div>
 	        <div class="form-group">
 	            <label>Confirm Password:</label>
 	            <form:password path="confirmPassword" class="form-control" />
+	            <br/>
 	            <form:errors path="confirmPassword" class="text-danger" />
 	        </div>
 	        <input type="submit" value="Register" class="btn btn-primary" />
@@ -48,11 +54,13 @@
 	        <div class="form-group">
 	            <label>Email:</label>
 	            <form:input path="email" class="form-control" />
+	            <br/>
 	            <form:errors path="email" class="text-danger" />
 	        </div>
 	        <div class="form-group">
 	            <label>Password:</label>
 	            <form:password path="password" class="form-control" />
+	            <br/>
 	            <form:errors path="password" class="text-danger" />
 	        </div>
 	        <input type="submit" value="Login" class="btn btn-success" />
