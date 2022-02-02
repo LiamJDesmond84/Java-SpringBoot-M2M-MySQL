@@ -216,7 +216,7 @@ public class MainController {
 		rating.setUserRating(userServ.getUser(userId));
 		rating.setMainRating(mainServ.getOne(id));
 		ratingServ.createOne(rating);
-		return "redirect:/dashboard";
+		return "redirect:/serf/show/{id}";
 		
 	}
 	

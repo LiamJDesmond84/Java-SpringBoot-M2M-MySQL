@@ -69,34 +69,32 @@
 	
 
 	<h3>Owner:</h3>
-	<h3>Ratings:</h3>
- 	<ol>
-		<c:forEach items="${car.ratings}" var="x">
-		<li>${x.rating}</li>
-		<li>${x.userRating.firstName}</li>
-		</c:forEach>
-	</ol>
 	<p><a href="/user/show/${car.owner.id}">${car.owner.firstName} ${car.owner.lastName}</a></p>
 
 <%--Add Ratingggggggg--%>
 
-<c:choose>
-<c:when test="${x.userRating.id == userLog.id}">
-		<c:forEach items="${car.ratings}" var="x">
-<p>You already gave this a rating</p>
+	<c:set var="userRated" value="false"/>
+	<c:forEach items="${car.ratings}" var="x">
+	<c:if test="${x.userRating == userLog}">
+		<c:set var="userRated" value="true"/>
+		<p>You already gave this a rating</p>
+	</c:if>
 		</c:forEach>
-</c:when>
-<c:otherwise>
-<form:form action="/addRating/${car.id}" method="POST" modelAttribute="rating">
-	<form:label path="rating">Rate</form:label>
-	<form:input type="number" path="rating"/>
-	<br/>
-	<form:errors path="rating" class="text-danger"/>
-	<button>Rate</button>
-</form:form>
-</c:otherwise>
 
-</c:choose>
+
+		<c:if test="${userRated == false}">
+			<form:form action="/addRating/${car.id}" method="POST" modelAttribute="rating">
+			<form:label path="rating">Rate</form:label>
+			<form:input type="number" path="rating"/>
+			<br/>
+			<form:errors path="rating" class="text-danger"/>
+			<button>Rate</button>
+			</form:form>
+		</c:if>
+
+
+
+
 
 <%--Add Side to Main--%>
 <c:if test="${car.owner.id == userLog.id}">
