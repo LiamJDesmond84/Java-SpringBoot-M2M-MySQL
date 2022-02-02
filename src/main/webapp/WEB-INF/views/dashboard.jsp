@@ -15,7 +15,7 @@
 	<div class="bg-success text-white">
 		<h2>Welcome ${userLog.firstName}!</h2>
 	</div>
-	<a href="/logout">Logout</a>
+	<a href="/logout" class="btn btn-info">Logout</a>
 	<div class="d-flex flex-column justify-content-center align-items-center">
 		<h1>List</h1>
 	</div>

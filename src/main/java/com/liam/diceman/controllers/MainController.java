@@ -167,7 +167,8 @@ public class MainController {
 		User liker = userServ.getUser(userId);
 
 		Car likedOne = mainServ.getOne(id);
-		this.mainServ.addExtra(liker, likedOne);
+		mainServ.addExtra(liker, likedOne);
+		
 		return "redirect:/dashboard";
 	}
 	
@@ -179,7 +180,8 @@ public class MainController {
 		User liker = userServ.getUser(userId);
 
 		Car likedOne = mainServ.getOne(id);
-		this.mainServ.removeExtra(liker, likedOne);
+		mainServ.removeExtra(liker, likedOne);
+		
 		return "redirect:/dashboard";
 	}
 	

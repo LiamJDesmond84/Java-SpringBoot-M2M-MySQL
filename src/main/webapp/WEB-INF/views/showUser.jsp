@@ -13,12 +13,12 @@
 <body>
 	<div class="bg-success text-white">
 		<h2>Logged In: ${userLog.firstName} ${userLog.lastName}</h2>
-		<a class="text-white" href="/logout">Logout</a>
+		<a class="btn btn-info" href="/logout">Logout</a>
 	</div>
 
 	<div class="d-flex justify-content-center flex-column align-items-center bg-success text-white">
 <h2>${user.firstName}'s Info</h2>
-<a class="text-white" href="/dashboard">Home</a>
+<a class="btn btn-dark" href="/dashboard">Home</a>
 	<hr/>
 
 </div>

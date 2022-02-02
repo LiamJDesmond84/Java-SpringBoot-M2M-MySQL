@@ -13,12 +13,12 @@
 <body>
 	<div class="bg-success text-white">
 		<h2>Logged In: ${userLog.firstName} ${userLog.lastName}</h2>
-		<a class="text-white" href="/logout">Logout</a>
+		<a class="btn btn-info" href="/logout">Logout</a>
 	</div>
 
 	<div class="d-flex justify-content-center flex-column align-items-center bg-success text-white">
 <h2>${car.model}'s Info</h2>
-<a class="text-white" href="/dashboard">Home</a>
+<a class="btn btn-dark" href="/dashboard">Home</a>
 	<hr/>
 
 </div>
@@ -53,7 +53,8 @@
 
 	<h3>Owner:</h3>
 	<p><a href="/user/show/${car.owner.id}">${car.owner.firstName} ${car.owner.lastName}</a></p>
-	
+
+<c:if test="${car.owner.id == userLog.id}">
 <p><a href="/newSideForm" class="btn btn-primary">Add an accessory</a></p>	
 <h3>Accessories:</h3>
  	<ol>
@@ -61,6 +62,7 @@
 		<li>${x.name} - ${x.price} - ${x.description}</li>
 		</c:forEach>
 	</ol>
+</c:if>
 	
 <h3>Likers:</h3>
  	<ol>
