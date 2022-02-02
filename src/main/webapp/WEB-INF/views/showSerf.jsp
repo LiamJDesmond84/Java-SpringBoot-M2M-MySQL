@@ -47,25 +47,24 @@
 				<th scope="row">Transmission:</th>	
 				<td>${car.transmission}</td>
 			</tr>
-
-
-
 		</tbody>
 	</table>
-	<h3>Accessories</h3>
-	<ol>
+	
+
+	
+<p><a href="/newSideForm" class="btn btn-primary">Add an accessory</a></p>	
+<h3>Accessories:</h3>
+ 	<ol>
 		<c:forEach items="${car.accessories}" var="x">
-		<li>${x.name} ($${x.price}) - ${x.description}</li>
+		<li>${x.name} - ${x.price} - ${x.description}</li>
 		</c:forEach>
 	</ol>
-<%--	<h3>Liked by:</h3>
- 	<ol>
-		<c:forEach items="${car.rsvpers}" var="x">
-		<li>${x.firstName} ${x.lastName}</li>
-		</c:forEach>
-	</ol> --%>
+	
+	
+	
 	<h3>Owner:</h3>
 	<p><a href="/user/show/${car.owner.id}">${car.owner.firstName} ${car.owner.lastName}</a></p>
+	
 	
 <c:if test="${car.owner.id == userLog.id}">
 	<div class="container d-flex flex-row justify-content-center">

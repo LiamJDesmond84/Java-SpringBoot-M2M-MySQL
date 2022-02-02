@@ -12,7 +12,7 @@
 </head>
 <body>
 	<div class="container d-flex flex-column justify-content-center align-items-center">
-	<h2 class="d-flex justify-content-center flex-column align-items-center bg-success text-white">Add a Wedding:</h2>
+	<h2 class="d-flex justify-content-center flex-column align-items-center bg-success text-white">Add Something...</h2>
 	<form:form action="/create/serf" method="POST" modelAttribute="carForm">
 	
 		<div class="form-group">

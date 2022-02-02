@@ -70,8 +70,8 @@ public class MainController {
 	
 	
 	// Show One Serf
-	@GetMapping("/serf/show/{id}") // Show car
-	public String showOne(@PathVariable("id") Long id, @ModelAttribute("car") Car car, Model viewModel, HttpSession session, @ModelAttribute("title") Title title) {
+	@GetMapping("/serf/show/{id}")
+	public String showOneSerf(@PathVariable("id") Long id, @ModelAttribute("car") Car car, Model viewModel, HttpSession session, @ModelAttribute("title") Title title) {
 		if (session.getAttribute("user_id") == null) {
 			return "redirect:/";
 		}
@@ -86,8 +86,8 @@ public class MainController {
 
 
 	// Create Serf Form
-	@GetMapping("/newSerfForm") // New car form
-	public String add(@ModelAttribute("carForm") Car car, HttpSession session) {
+	@GetMapping("/newSerfForm")
+	public String newSerfForm(@ModelAttribute("carForm") Car car, HttpSession session) {
 		if (session.getAttribute("user_id") == null) {
 			return "redirect:/";
 		}
@@ -95,8 +95,8 @@ public class MainController {
 	}
 
 	// Create Serf Process
-	@PostMapping("/create/serf") // New car process
-	public String createOne(@Valid @ModelAttribute("carForm") Car newSerf, BindingResult result, HttpSession session) {
+	@PostMapping("/create/serf")
+	public String createSerf(@Valid @ModelAttribute("carForm") Car newSerf, BindingResult result, HttpSession session) {
 		if(result.hasErrors()) {
 			 return "views/createSerf.jsp";
 		}
@@ -110,8 +110,8 @@ public class MainController {
 	
 	
 	// Edit Serf Form
-	@GetMapping("/edit/serf/{id}") // Edit car form
-	public String editCar(@PathVariable("id") Long id, @ModelAttribute("car") Car serf, Model viewModel, HttpSession session) {
+	@GetMapping("/edit/serf/{id}")
+	public String editSerfForm(@PathVariable("id") Long id, @ModelAttribute("car") Car serf, Model viewModel, HttpSession session) {
 		if (session.getAttribute("user_id") == null) {
 			return "redirect:/";
 		}
@@ -126,8 +126,8 @@ public class MainController {
 	}
 	
 	// Edit Serf Process
-	@PostMapping("/edit/serf/proc/{id}") // From edit process
-	public String updateCar(@PathVariable("id") Long id, @Valid @ModelAttribute("car") Car serf, BindingResult result, @RequestParam("owner") User user, Model viewModel, HttpSession session) {
+	@PostMapping("/edit/serf/proc/{id}")
+	public String updateSerf(@PathVariable("id") Long id, @Valid @ModelAttribute("car") Car serf, BindingResult result, @RequestParam("owner") User user, Model viewModel, HttpSession session) {
 		if (result.hasErrors()) {
 
 			Long userId = (Long) session.getAttribute("user_id");
@@ -144,28 +144,13 @@ public class MainController {
 	
 
 	// Delete Serf
-	@GetMapping("/delete/serf/{id}") // Delete car (from index page)
+	@GetMapping("/delete/serf/{id}")
 	public String deleteSerf(@PathVariable("id") Long id) {
 		mainServ.deleteOne(id);
 		return "redirect:/dashboard";
 	}
 	
-//	@PostMapping("/edit/{id}") // edit FROM show car PAGE
-//	public String updateOne(@PathVariable("id") Long id, @Valid @ModelAttribute("car") Car updatedCar, BindingResult result, @RequestParam("owner") User user, Model viewModel, HttpSession session, @ModelAttribute("title") Title title){
-//		if (result.hasErrors()) {
-
-//			Long userId = (Long) session.getAttribute("user_id");
-//			User userLog = userServ.getUser(userId);
-//			
-//			viewModel.addAttribute("userLog", userLog);
-//			viewModel.addAttribute("car", mainServ.getOne(id));
-//			return "views/editSerf.jsp";
-//		}
-//		this.mainServ.updateOne(updatedCar);
-//		return "redirect:/serf/show/{id}";
-//	}
 	
-
 
 //	 _______                         ______      _______                    
 //	|   |   |.---.-.-----.--.--.    |__    |    |   |   |.---.-.-----.--.--.
@@ -208,7 +193,8 @@ public class MainController {
 //	                                                   
 
 	
-	@PostMapping("/addOneToOne/{id}") // Add one to Main Processing
+	// Add one to Main Processing
+	@PostMapping("/addOneToOne/{id}")
 	public String addOneToOne(@PathVariable("id") Long id, @Valid @ModelAttribute("title") Title title, BindingResult result, Model viewModel, HttpSession session) {
 		if (result.hasErrors()) {
 			Long userId = (Long) session.getAttribute("user_id");
@@ -224,68 +210,6 @@ public class MainController {
 	}
 	
 
-//	 ____ ___                    
-//	|    |   \______ ___________ 
-//	|    |   /  ___// __ \_  __ \
-//	|    |  /\___ \\  ___/|  | \/
-//	|______//____  >\___  >__|   
-//	             \/     \/       
-
-	
-	
-	//////  NEW LOGIN/REG //////
-	
-    @GetMapping("/")
-    public String loginPage(Model model) {
-        model.addAttribute("newUser", new User());
-        model.addAttribute("newLogin", new LoginUser());
-        return "views/login.jsp";
-    }
-    
-    // Create User Process
-    @PostMapping("/registerUser")
-    public String registerUser(@Valid @ModelAttribute("newUser") User newUser, BindingResult result, Model model, HttpSession session) {
-    	userServ.register(newUser, result);
-        if(result.hasErrors()) {
-            model.addAttribute("newLogin", new LoginUser());
-            return "views/login.jsp";
-        }
-        session.setAttribute("user_id", newUser.getId());
-        return "redirect:/dashboard";
-    }
-    
-    // Login User Process
-    @PostMapping("/loginUser")
-    public String loginUser(@Valid @ModelAttribute("newLogin") LoginUser newLogin, BindingResult result, Model model, HttpSession session) {
-        User user = userServ.login(newLogin, result);
-        if(result.hasErrors()) {
-            model.addAttribute("newUser", new User());
-            return "views/login.jsp";
-        }
-        session.setAttribute("user_id", user.getId());
-        return "redirect:/dashboard";
-    }
-    
-    // Show One User
-    @GetMapping("/user/show/{id}")
-    public String showUser(@PathVariable("id") Long id, Model model, HttpSession session) {
-		if (session.getAttribute("user_id") == null) {
-			return "redirect:/";
-		}
-		
-		Long userId = (Long) session.getAttribute("user_id");
-		model.addAttribute("userLog", userServ.getUser(userId));
-    	model.addAttribute("user", userServ.getUser(id));
-        return "views/showUser.jsp";
-    }
-    
-    // Logout User
-	@GetMapping("/logout")
-	public String logout(HttpSession session) {
-	session.invalidate();
-	return "redirect:/";
-	}
-	
 
 
 //    __  ___      _                   _ __  __       ____                __           __  ___                 
@@ -296,25 +220,16 @@ public class MainController {
 //                                                                                                    /____/   
 
 
-	
-	
-	
-	
-	
-
-  
-
-	// ONE:MANY ///////////////////
   
 	// Side form
-	@GetMapping("/sides/new")
+	@GetMapping("/newSideForm")
 	public String newSideForm(@ModelAttribute("accessory") Accessory access, Model model, HttpSession session) {	  
 		List<Car> everything = mainServ.getAll();
 		Long userId = (Long) session.getAttribute("user_id");
 		
 		model.addAttribute("userLog", userServ.getUser(userId));
 		model.addAttribute("everything", everything);
-		return "/views/newSide.jsp";
+		return "/views/createSide.jsp";
 	}
 
 	// Create Side Processing with MAIN dropdown
@@ -329,12 +244,70 @@ public class MainController {
 		sideServ.createOne(access);
 		return String.format("redirect:/serf/show/%s", access.getMainOwner().getId());
 	}
- 
-//  
-//
-//  
-//
-//
+	
+//	 ____ ___                    
+//	|    |   \______ ___________ 
+//	|    |   /  ___// __ \_  __ \
+//	|    |  /\___ \\  ___/|  | \/
+//	|______//____  >\___  >__|   
+//	             \/     \/       
+
+	
+	
+	//////  NEW LOGIN/REG //////
+	
+   @GetMapping("/")
+   public String loginPage(Model model) {
+       model.addAttribute("newUser", new User());
+       model.addAttribute("newLogin", new LoginUser());
+       return "views/login.jsp";
+   }
+   
+   // Create User Process
+   @PostMapping("/registerUser")
+   public String registerUser(@Valid @ModelAttribute("newUser") User newUser, BindingResult result, Model model, HttpSession session) {
+   	userServ.register(newUser, result);
+       if(result.hasErrors()) {
+           model.addAttribute("newLogin", new LoginUser());
+           return "views/login.jsp";
+       }
+       session.setAttribute("user_id", newUser.getId());
+       return "redirect:/dashboard";
+   }
+   
+   // Login User Process
+   @PostMapping("/loginUser")
+   public String loginUser(@Valid @ModelAttribute("newLogin") LoginUser newLogin, BindingResult result, Model model, HttpSession session) {
+       User user = userServ.login(newLogin, result);
+       if(result.hasErrors()) {
+           model.addAttribute("newUser", new User());
+           return "views/login.jsp";
+       }
+       session.setAttribute("user_id", user.getId());
+       return "redirect:/dashboard";
+   }
+   
+   // Show One User
+   @GetMapping("/user/show/{id}")
+   public String showUser(@PathVariable("id") Long id, Model model, HttpSession session) {
+		if (session.getAttribute("user_id") == null) {
+			return "redirect:/";
+		}
+		
+		Long userId = (Long) session.getAttribute("user_id");
+		model.addAttribute("userLog", userServ.getUser(userId));
+   	model.addAttribute("user", userServ.getUser(id));
+       return "views/showUser.jsp";
+   }
+   
+   // Logout User
+	@GetMapping("/logout")
+	public String logout(HttpSession session) {
+	session.invalidate();
+	return "redirect:/";
+	}
+	
+
 //  
 //  // Get all Sides
 //  @RequestMapping("/answers")
@@ -374,32 +347,8 @@ public class MainController {
 ////      return "redirect:/questions";
 //  }
   
-//  // Create new Side on Main Show Page
-//  @RequestMapping(value="/create/answerForQuestion", method=RequestMethod.POST)
-//	public String createTag(@Valid @ModelAttribute("answer") Answer answer, BindingResult result, Model viewModel) {
-//		Long mainId = answer.getQuestion().getId();
-//		if (result.hasErrors()) {
-//			viewModel.addAttribute("dog", this.mainServ.getOne(mainId));
-//			return "show.jsp";
-//		}
-//		this.mainServ.createSide(answer);
-//		return "redirect:/questions/show/" + mainId;
-//	}
 
 
-
-
-
-//@PostMapping("/addTag") // New tag process (from show wedding page)
-//public String createTag(@Valid @ModelAttribute("tag") Tag tag, BindingResult result, Model viewModel) {
-//	Long weddingId = tag.getWedding().getId();
-//	if (result.hasErrors()) {
-//		viewModel.addAttribute("wedding", this.mainServ.getOne(weddingId));
-//		return "show.jsp";
-//	}
-//	this.tagService.createTag(tag);
-//	return "redirect:/" + weddingId;
-//}
 
 }
 
