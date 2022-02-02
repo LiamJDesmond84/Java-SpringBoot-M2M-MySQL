@@ -22,8 +22,8 @@
 	
 	
 	<div class="container d-flex flex-column justify-content-center align-items-center">
-		<h2 class="d-flex justify-content-center flex-column align-items-center bg-success text-white">Add Something</h2>
-		<form:form action="/create/side" method="POST" modelAttribute="accessory">
+
+		<form:form class='card p-3 bg-light' action="/create/side" method="POST" modelAttribute="accessory">
 		
 			<div class="form-group">
 				<form:label path="name">Name:</form:label>

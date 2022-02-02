@@ -17,12 +17,12 @@
 	</div>
 	<div class="d-flex justify-content-center flex-column align-items-center bg-success text-white mb-5">
 		<h2>Edit:</h2>
-		<a class="text-white" href="/dashboard">Home</a>
+		<a class="btn btn-dark" href="/dashboard">Home</a>
 	</div>
 
 	
 	<div class="container d-flex flex-column justify-content-center align-items-center">
-	<form:form action="/edit/serf/proc/${car.id}" method="POST" modelAttribute="car">
+	<form:form class='card p-3 bg-light' action="/edit/serf/proc/${car.id}" method="POST" modelAttribute="car">
 	<form:input type="hidden" value="${car.owner.id}" path="owner" />
 
 		<div class="form-group">
@@ -60,8 +60,11 @@
 		<button class="btn btn-warning">Edit</button>
 		
 	</form:form>
-		<a href="/serf/show/${car.id}" class="btn btn-primary">Back</a>
-	<button onclick="location.href=`/delete/serf/${car.id}`" class="btn btn-danger">Delete</button>
+	<hr class="border border-dark" style="width: 600px;"/>
+		<div class="container d-flex flex-row justify-content-center">
+			<a href="/serf/show/${car.id}" class="btn btn-primary">Back</a>
+			<button onclick="location.href=`/delete/serf/${car.id}`" class="btn btn-danger">Delete</button>
+		</div>
 	</div>
 
 

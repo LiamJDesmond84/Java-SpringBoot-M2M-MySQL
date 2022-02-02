@@ -19,6 +19,16 @@
 	<div class="d-flex justify-content-center flex-column align-items-center bg-success text-white">
 <h2>${car.model}'s Info</h2>
 <a class="btn btn-dark" href="/dashboard">Home</a>
+
+<%--Edit ------------- Delete--%>
+<c:if test="${car.owner.id == userLog.id}">
+	<hr class="border border-dark" style="width: 600px;"/>
+	<div class="container d-flex flex-row justify-content-center">
+		<a href="/edit/serf/${car.id}" class="btn btn-warning">Edit</a>
+		<button onclick="location.href=`/delete/serf/${car.id}`" class="btn btn-danger">Delete</button>
+	</div>
+</c:if>
+
 	<hr/>
 
 </div>
@@ -83,7 +93,7 @@
 
 
 		<c:if test="${userRated == false}">
-			<form:form action="/addRating/${car.id}" method="POST" modelAttribute="rating">
+			<form:form class='card p-3 bg-light' action="/addRating/${car.id}" method="POST" modelAttribute="rating">
 			<form:label path="rating">Rate</form:label>
 			<form:input type="number" path="rating"/>
 			<br/>
@@ -117,14 +127,7 @@
 		</c:forEach>
 	</ol>	
 	
-	
-<%--Edit Delete--%>
-<c:if test="${car.owner.id == userLog.id}">
-	<div class="container d-flex flex-row justify-content-center">
-		<a href="/edit/serf/${car.id}" class="btn btn-warning">Edit</a>
-		<button onclick="location.href=`/delete/serf/${car.id}`" class="btn btn-danger">Delete</button>
-	</div>
-</c:if>
+
 
 <%-- <c:if test="${car.owner.id == userLog.id}">
 <form:form action="/edit/serf/proc/${car.id}" method="POST" modelAttribute="car">
@@ -205,13 +208,7 @@
 </c:otherwise>
 </c:choose>
 </div>
-						<%-- If/Else End --%>
-						
-		<%-- <form action="/addRating/${car.id}" method="POST">
-			<label>Rate</label>
-			<input type="text" name="rating"/>
-			<button>Rate</button>
-		</form>--%>
+
 
 </div>
 </body>
