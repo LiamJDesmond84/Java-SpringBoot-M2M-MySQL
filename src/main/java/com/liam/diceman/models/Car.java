@@ -73,9 +73,13 @@ public class Car {
 	@JoinColumn(name="user_id")
 	private User owner;
 	
+	
+	
 	// One to Many
 	@OneToMany(mappedBy="mainOwner", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private List<Accessory> accessories;
+	
+	
 	
 	// Many to Many
 	@ManyToMany(cascade = CascadeType.ALL)
@@ -86,6 +90,10 @@ public class Car {
 	private List<User> likers;
 	
 	
+	
+	// Many to Many with Fields in between
+	@OneToMany(mappedBy = "mainRating", fetch = FetchType.LAZY)
+	private List<Rating> ratings;
 	
 	
 	public Car() {
@@ -241,6 +249,22 @@ public class Car {
 
 	public void setLikers(List<User> likers) {
 		this.likers = likers;
+	}
+
+
+
+
+
+	public List<Rating> getRatings() {
+		return ratings;
+	}
+
+
+
+
+
+	public void setRatings(List<Rating> ratings) {
+		this.ratings = ratings;
 	}
 	
 	

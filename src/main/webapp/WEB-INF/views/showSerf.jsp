@@ -47,23 +47,71 @@
 				<th scope="row">Transmission:</th>	
 				<td>${car.transmission}</td>
 			</tr>
+			<tr>
+				
+					<th scope="row">Rating:</th>
+					<td>
+					<c:set var="avg" value="${0}"/>
+					<c:forEach items="${car.ratings}" var="x">
+					<c:if test="${car.ratings.size() != 0}">
+					<c:set var="avg" value="${avg + x.rating}"/>
+					</c:if>
+					</c:forEach>
+					<c:if test="${avg > 0 }">
+					<c:set var="avg" value="${avg / car.ratings.size()}"/>
+					</c:if>
+					${avg}
+					</td>
+			</tr>
+			
 		</tbody>
 	</table>
 	
 
 	<h3>Owner:</h3>
+	<h3>Ratings:</h3>
+ 	<ol>
+		<c:forEach items="${car.ratings}" var="x">
+		<li>${x.rating}</li>
+		<li>${x.userRating.firstName}</li>
+		</c:forEach>
+	</ol>
 	<p><a href="/user/show/${car.owner.id}">${car.owner.firstName} ${car.owner.lastName}</a></p>
 
+<%--Add Ratingggggggg--%>
+
+<c:choose>
+<c:when test="${x.userRating.id == userLog.id}">
+		<c:forEach items="${car.ratings}" var="x">
+<p>You already gave this a rating</p>
+		</c:forEach>
+</c:when>
+<c:otherwise>
+<form:form action="/addRating/${car.id}" method="POST" modelAttribute="rating">
+	<form:label path="rating">Rate</form:label>
+	<form:input type="number" path="rating"/>
+	<br/>
+	<form:errors path="rating" class="text-danger"/>
+	<button>Rate</button>
+</form:form>
+</c:otherwise>
+
+</c:choose>
+
+<%--Add Side to Main--%>
 <c:if test="${car.owner.id == userLog.id}">
 <p><a href="/newSideForm" class="btn btn-primary">Add an accessory</a></p>	
+</c:if>
+
+<%--Show Sides--%>
 <h3>Accessories:</h3>
  	<ol>
 		<c:forEach items="${car.accessories}" var="x">
 		<li>${x.name} - ${x.price} - ${x.description}</li>
 		</c:forEach>
 	</ol>
-</c:if>
-	
+
+<%--Show Many to Many p1--%>	
 <h3>Likers:</h3>
  	<ol>
 		<c:forEach items="${car.likers}" var="x">
@@ -72,7 +120,7 @@
 	</ol>	
 	
 	
-	
+<%--Edit Delete--%>
 <c:if test="${car.owner.id == userLog.id}">
 	<div class="container d-flex flex-row justify-content-center">
 		<a href="/edit/serf/${car.id}" class="btn btn-warning">Edit</a>
@@ -118,6 +166,7 @@
 
 </div>
 
+<%--Add One to One if not existing--%>
 
 						<%--If/Else--%>
 <div class="container d-flex flex-column justify-content-center align-items-center">
@@ -159,6 +208,12 @@
 </c:choose>
 </div>
 						<%-- If/Else End --%>
+						
+		<%-- <form action="/addRating/${car.id}" method="POST">
+			<label>Rate</label>
+			<input type="text" name="rating"/>
+			<button>Rate</button>
+		</form>--%>
 
 </div>
 </body>

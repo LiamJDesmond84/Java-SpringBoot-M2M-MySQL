@@ -64,6 +64,8 @@ public class User {
 	@OneToMany(mappedBy="owner", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private List<Car> cars;
 	
+	
+	
 	// Many to Many
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(
@@ -71,6 +73,12 @@ public class User {
 			joinColumns = @JoinColumn(name="user_id"),
 			inverseJoinColumns = @JoinColumn(name="car_id"))
 	private List<Car> likes;
+	
+	
+	
+	// Many to Many with Fields in between
+	@OneToMany(mappedBy = "userRating", fetch = FetchType.LAZY)
+	private List<Rating> ratings;
 	
 	
 	
@@ -187,6 +195,16 @@ public class User {
 
 	public void setLikes(List<Car> likes) {
 		this.likes = likes;
+	}
+
+
+	public List<Rating> getRatings() {
+		return ratings;
+	}
+
+
+	public void setRatings(List<Rating> ratings) {
+		this.ratings = ratings;
 	}
 	
 	

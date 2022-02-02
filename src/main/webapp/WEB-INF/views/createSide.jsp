@@ -50,7 +50,7 @@
 	 				<form:option value="${x.id}">${x.make} ${x.model}</form:option>
 	 			</c:forEach>
 		 	</form:select>
-		 	<form:input type="hidden" value="${x.mainOwner.id}" path="mainOwner" />
+		 	<form:input type="hidden" value="${x.id}" path="mainOwner" />
 	
 			<button>Create</button>
 	

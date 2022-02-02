@@ -35,6 +35,7 @@
 				<th>Transmission</th>
 				<th>Owner</th>
 				<th>Registered</th>
+				<th>Rating</th>
 				<th>Action</th>
 			</tr>
 			</thead>
@@ -71,6 +72,32 @@
 					<td><a href="/delete/serf/${x.id}">Delete</a></td>
 				</c:if>--%>
 				
+				
+<%--RATINGGGGGGGG--%>
+				<c:choose>
+
+					<c:when test="${x.ratings.isEmpty()}">
+						<td>0</td>
+					</c:when>
+					<c:otherwise>
+											<td>
+					<c:set var="avg" value="${0}"/>
+					<c:forEach items="${x.ratings}" var="y">
+					<c:if test="${x.ratings.size() != 0}">
+					<c:set var="avg" value="${avg + y.rating}"/>
+					</c:if>
+					</c:forEach>
+					<c:if test="${avg > 0 }">
+					<c:set var="avg" value="${avg / x.ratings.size()}"/>
+					</c:if>
+					${avg}
+					</td>
+					</c:otherwise>
+					
+				</c:choose>
+<%-- ENDDDDD  -----  RATINGGGGGGGG--%>				
+
+
 								<%--If/Else--%>
 	 			<c:choose>
 
@@ -87,7 +114,6 @@
 
 					<c:otherwise>
 						<td><a href="/like/${x.id}">Like</a></td>
-
 					</c:otherwise>
 				
 				</c:choose>

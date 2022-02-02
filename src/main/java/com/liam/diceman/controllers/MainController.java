@@ -18,10 +18,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.liam.diceman.models.Accessory;
 import com.liam.diceman.models.Car;
 import com.liam.diceman.models.LoginUser;
+import com.liam.diceman.models.Rating;
 import com.liam.diceman.models.Title;
 import com.liam.diceman.models.User;
 import com.liam.diceman.services.AccessoryService;
 import com.liam.diceman.services.CarService;
+import com.liam.diceman.services.RatingService;
 import com.liam.diceman.services.TitleService;
 import com.liam.diceman.services.UserService;
 
@@ -39,6 +41,9 @@ public class MainController {
 	
 	@Autowired
 	private TitleService soloServ;
+	
+	@Autowired
+	private RatingService ratingServ;
 
 	
 
@@ -54,16 +59,16 @@ public class MainController {
 	
 	// DashBoard
 	@GetMapping("/dashboard") // All Serfs
-	public String index(HttpSession session, Model viewModel) {
+	public String index(HttpSession session, Model model, @ModelAttribute("rating") Rating rating) {
 		if (session.getAttribute("user_id") == null) {
 			return "redirect:/";
 		}
 
 		Long userId = (Long) session.getAttribute("user_id");
 		User userLog = userServ.getUser(userId);
-		viewModel.addAttribute("userLog", userLog);
+		model.addAttribute("userLog", userLog);
 		
-		viewModel.addAttribute("allSerfs", mainServ.getAll());
+		model.addAttribute("allSerfs", mainServ.getAll());
 		
 		return "views/dashboard.jsp";
 	}
@@ -71,15 +76,15 @@ public class MainController {
 	
 	// Show One Serf
 	@GetMapping("/serf/show/{id}")
-	public String showOneSerf(@PathVariable("id") Long id, @ModelAttribute("car") Car car, Model viewModel, HttpSession session, @ModelAttribute("title") Title title) {
+	public String showOneSerf(@PathVariable("id") Long id, @ModelAttribute("car") Car car, Model model, HttpSession session, @ModelAttribute("title") Title title, @Valid @ModelAttribute("rating") Rating rating, BindingResult result) {
 		if (session.getAttribute("user_id") == null) {
 			return "redirect:/";
 		}
 		
 		Long userId = (Long) session.getAttribute("user_id");
 
-		viewModel.addAttribute("userLog", userServ.getUser(userId));
-		viewModel.addAttribute("car", mainServ.getOne(id));
+		model.addAttribute("userLog", userServ.getUser(userId));
+		model.addAttribute("car", mainServ.getOne(id));
 		return "views/showSerf.jsp";
 	}
 	
@@ -111,30 +116,30 @@ public class MainController {
 	
 	// Edit Serf Form
 	@GetMapping("/edit/serf/{id}")
-	public String editSerfForm(@PathVariable("id") Long id, @ModelAttribute("car") Car serf, Model viewModel, HttpSession session) {
+	public String editSerfForm(@PathVariable("id") Long id, @ModelAttribute("car") Car serf, Model model, HttpSession session) {
 		if (session.getAttribute("user_id") == null) {
 			return "redirect:/";
 		}
 		
 		Long userId = (Long) session.getAttribute("user_id");
 		User userLog = userServ.getUser(userId);
-		viewModel.addAttribute("userLog", userLog);
+		model.addAttribute("userLog", userLog);
 		
-		viewModel.addAttribute("car", mainServ.getOne(id));
+		model.addAttribute("car", mainServ.getOne(id));
 		return "views/editSerf.jsp";
 		
 	}
 	
 	// Edit Serf Process
 	@PostMapping("/edit/serf/proc/{id}")
-	public String updateSerf(@PathVariable("id") Long id, @Valid @ModelAttribute("car") Car serf, BindingResult result, @RequestParam("owner") User user, Model viewModel, HttpSession session) {
+	public String updateSerf(@PathVariable("id") Long id, @Valid @ModelAttribute("car") Car serf, BindingResult result, @RequestParam("owner") User user, Model model, HttpSession session) {
 		if (result.hasErrors()) {
 
 			Long userId = (Long) session.getAttribute("user_id");
 			User userLog = userServ.getUser(userId);
 			
-			viewModel.addAttribute("userLog", userLog);
-			viewModel.addAttribute("car", mainServ.getOne(id));
+			model.addAttribute("userLog", userLog);
+			model.addAttribute("car", mainServ.getOne(id));
 			return "views/editSerf.jsp";
 		}
 		serf.setOwner(user);
@@ -187,6 +192,36 @@ public class MainController {
 	
 
 
+//    __  ___                     ___      __  ___                               
+//   /  |/  /___ _____  __  __   |__ \    /  |/  /___ _____  __  __     __    __ 
+//  / /|_/ / __ `/ __ \/ / / /   __/ /   / /|_/ / __ `/ __ \/ / / /  __/ /___/ /_
+// / /  / / /_/ / / / / /_/ /   / __/   / /  / / /_/ / / / / /_/ /  /_  __/_  __/
+///_/  /_/\__,_/_/ /_/\__, /   /____/  /_/  /_/\__,_/_/ /_/\__, /    /_/   /_/   
+//                   /____/                               /____/                 
+
+	
+
+	// Add Rating
+	@PostMapping("/addRating/{id}")
+	private String addRating(@PathVariable("id") Long id, @Valid @ModelAttribute("rating") Rating rating, BindingResult result, HttpSession session, Model model) {
+		if(result.hasErrors()) {
+			Long userId = (Long) session.getAttribute("user_id");
+			User userLog = userServ.getUser(userId);
+			model.addAttribute("userLog", userLog);
+				
+			model.addAttribute("allSerfs", mainServ.getAll());
+			return "views/dashboard.jsp";
+		}
+		Long userId = (Long) session.getAttribute("user_id");
+		rating.setUserRating(userServ.getUser(userId));
+		rating.setMainRating(mainServ.getOne(id));
+		ratingServ.createOne(rating);
+		return "redirect:/dashboard";
+		
+	}
+	
+	
+
 //	   ____                __           ____           
 //	  / __ \____  ___     / /_____     / __ \____  ___ 
 //	 / / / / __ \/ _ \   / __/ __ \   / / / / __ \/ _ \
@@ -197,13 +232,13 @@ public class MainController {
 	
 	// Add one to Main Processing
 	@PostMapping("/addOneToOne/{id}")
-	public String addOneToOne(@PathVariable("id") Long id, @Valid @ModelAttribute("title") Title title, BindingResult result, Model viewModel, HttpSession session) {
+	public String addOneToOne(@PathVariable("id") Long id,@Valid @ModelAttribute("title") Title title, BindingResult result, Model model, HttpSession session) {
 		if (result.hasErrors()) {
 			Long userId = (Long) session.getAttribute("user_id");
 
-			viewModel.addAttribute("car", mainServ.getOne(id));
-			viewModel.addAttribute("userLog", userServ.getUser(userId));
-			viewModel.addAttribute("car", mainServ.getOne(id));
+
+			model.addAttribute("userLog", userServ.getUser(userId));
+			model.addAttribute("car", mainServ.getOne(id));
 			return "views/showSerf.jsp";
 		}
 		soloServ.createOne(title);
