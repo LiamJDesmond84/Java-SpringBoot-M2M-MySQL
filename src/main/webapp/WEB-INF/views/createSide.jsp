@@ -12,40 +12,40 @@
 </head>
 <body>
 	<div class="container d-flex flex-column justify-content-center align-items-center">
-	<h2 class="d-flex justify-content-center flex-column align-items-center bg-success text-white">Add Something</h2>
-	<form:form action="/create/side" method="POST" modelAttribute="accessory">
-	
-		<div class="form-group">
-			<form:label path="name">Name:</form:label>
-			<form:input path="name" />
-			<br/>
-			<form:errors path="name" class="text-danger" />
-		</div>
-		<div class="form-group">
-			<form:label path="price">Price:</form:label>
-			<form:input path="price" />
-			<br/>
-			<form:errors path="price" class="text-danger" />
-		</div>
-		<div class="form-group">
-			<form:label path="description">Description:</form:label>
-			<form:input path="description" />
-			<br/>
-			<form:errors path="description" class="text-danger" />
-		</div>
+		<h2 class="d-flex justify-content-center flex-column align-items-center bg-success text-white">Add Something</h2>
+		<form:form action="/create/side" method="POST" modelAttribute="accessory">
 		
-		<form:label path="mainOwner">Car:</form:label>
-	 	<form:select path="mainOwner">
- 			<c:forEach items="${everything}" var="x">
- 				<form:option value="${x.id}">${x.make} ${x.model}</form:option>
- 			</c:forEach>
-	 	</form:select>
-	 	<form:input type="hidden" value="${x.mainOwner.id}" path="mainOwner" />
-
-		<button>Create</button>
-
-	</form:form>
-	<a href="/dashboard">Dashboard</a>
-</div>
+			<div class="form-group">
+				<form:label path="name">Name:</form:label>
+				<form:input path="name" />
+				<br/>
+				<form:errors path="name" class="text-danger" />
+			</div>
+			<div class="form-group">
+				<form:label path="price">Price:</form:label>
+				<form:input path="price" />
+				<br/>
+				<form:errors path="price" class="text-danger" />
+			</div>
+			<div class="form-group">
+				<form:label path="description">Description:</form:label>
+				<form:input path="description" />
+				<br/>
+				<form:errors path="description" class="text-danger" />
+			</div>
+			
+			<form:label path="mainOwner">Car:</form:label>
+		 	<form:select path="mainOwner">
+	 			<c:forEach items="${everything}" var="x">
+	 				<form:option value="${x.id}">${x.make} ${x.model}</form:option>
+	 			</c:forEach>
+		 	</form:select>
+		 	<form:input type="hidden" value="${x.mainOwner.id}" path="mainOwner" />
+	
+			<button>Create</button>
+	
+		</form:form>
+		<a href="/dashboard">Dashboard</a>
+	</div>
 </body>
 </html>

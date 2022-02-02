@@ -10,6 +10,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
@@ -60,6 +63,15 @@ public class User {
 	// One to Many
 	@OneToMany(mappedBy="owner", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private List<Car> cars;
+	
+	// Many to Many
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(
+			name="likes",
+			joinColumns = @JoinColumn(name="user_id"),
+			inverseJoinColumns = @JoinColumn(name="car_id"))
+	private List<Car> likes;
+	
 	
 	
 	
@@ -166,6 +178,18 @@ public class User {
 	public void setCars(List<Car> cars) {
 		this.cars = cars;
 	}
+
+
+	public List<Car> getLikes() {
+		return likes;
+	}
+
+
+	public void setLikes(List<Car> likes) {
+		this.likes = likes;
+	}
+	
+	
 	
 	
 

@@ -31,7 +31,7 @@
 				<th>Model</th>
 				<th>Color</th>
 				<th>Year</th>
-<!-- 				<th>Likes</th> -->
+				<th>Likes</th>
 				<th>Transmission</th>
 				<th>Owner</th>
 				<th>Registered</th>
@@ -50,7 +50,7 @@
 				
 				<td>${x.color}</td>
 				<td>${x.year}</td>
-<%-- 				<td>${x.likers.size()}</td> --%>
+ 				<td>${x.likers.size()}</td>
 				<td>${x.transmission}</td>
 
 
@@ -67,28 +67,30 @@
 				</c:choose>
 												<%--If/Else End--%>
 				
-				<c:if test="${x.owner.id == userLog.id}">
+				<%-- <c:if test="${x.owner.id == userLog.id}">
 					<td><a href="/delete/serf/${x.id}">Delete</a></td>
-				</c:if>
+				</c:if>--%>
+				
 								<%--If/Else--%>
-<%-- 			<c:choose>
+	 			<c:choose>
 
-					If User Created This
+
 					<c:when test="${x.owner.id == userLog.id}">
 						<td><a href="/delete/serf/${x.id}">Delete</a></td>
 					</c:when>
 						
-					If User Already Liked This	
-					<c:when test="${x.rsvpers.contains(userLog)}">
-						<td><a href="/unrsvp/${x.id}">un-RSVP</a></td>
+
+					<c:when test="${x.likers.contains(userLog)}">
+						<td><a href="/unlike/${x.id}">un-Like</a></td>
 					</c:when>
 						
-					If User Hasn't Liked This	
+
 					<c:otherwise>
-						<td><a href="/rsvp/${x.id}">RSVP</a></td>
+						<td><a href="/like/${x.id}">Like</a></td>
+
 					</c:otherwise>
 				
-				</c:choose> --%>
+				</c:choose>
 								<%--If/Else End--%>
 				
 			</tr>

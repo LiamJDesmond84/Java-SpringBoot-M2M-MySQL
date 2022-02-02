@@ -11,6 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -74,6 +76,16 @@ public class Car {
 	// One to Many
 	@OneToMany(mappedBy="mainOwner", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private List<Accessory> accessories;
+	
+	// Many to Many
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(
+			name="likes",
+			joinColumns = @JoinColumn(name="car_id"),
+			inverseJoinColumns = @JoinColumn(name="user_id"))
+	private List<User> likers;
+	
+	
 	
 	
 	public Car() {
@@ -213,6 +225,22 @@ public class Car {
 
 	public void setAccessories(List<Accessory> accessories) {
 		this.accessories = accessories;
+	}
+
+
+
+
+
+	public List<User> getLikers() {
+		return likers;
+	}
+
+
+
+
+
+	public void setLikers(List<User> likers) {
+		this.likers = likers;
 	}
 	
 	

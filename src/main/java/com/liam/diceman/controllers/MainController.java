@@ -161,25 +161,25 @@ public class MainController {
 
 	
 	// User M2M Serf Process
-	@GetMapping("/rsvp/{id}")
+	@GetMapping("/like/{id}")
 	public String RSVP(@PathVariable("id") Long id, HttpSession session) {
 		Long userId = (Long) session.getAttribute("user_id");
-		User rspvr = userServ.getUser(userId);
-//		Long petId = id;
-		Car rspvdCar = mainServ.getOne(id);
-//		this.mainServ.addRSVP(rspvr, rspvdCar);
+		User liker = userServ.getUser(userId);
+
+		Car likedOne = mainServ.getOne(id);
+		this.mainServ.addExtra(liker, likedOne);
 		return "redirect:/dashboard";
 	}
 	
 	
 	// User M2M Serf Process undo
-	@GetMapping("/unrsvp/{id}")
+	@GetMapping("/unlike/{id}")
 	public String unRSVP(@PathVariable("id") Long id, HttpSession session) {
 		Long userId = (Long) session.getAttribute("user_id");
-		User rspvr = userServ.getUser(userId);
-//		Long petId = id;
-		Car rspvdCar = mainServ.getOne(id);
-//		this.mainServ.removeRSVP(rspvr, rspvdCar);
+		User liker = userServ.getUser(userId);
+
+		Car likedOne = mainServ.getOne(id);
+		this.mainServ.removeExtra(liker, likedOne);
 		return "redirect:/dashboard";
 	}
 	
@@ -237,9 +237,12 @@ public class MainController {
 	public String createSide(@Valid @ModelAttribute("accessory") Accessory access, BindingResult result, Model model, HttpSession session) {
 		//  	Long questionId = obj.getQuestion().getId();
 		if(result.hasErrors()) {
-		List<Car> everything = mainServ.getAll();
-		model.addAttribute("questions", everything);
-		return "/views/newSide.jsp";
+			List<Car> everything = mainServ.getAll();
+			Long userId = (Long) session.getAttribute("user_id");
+			
+			model.addAttribute("userLog", userServ.getUser(userId));
+			model.addAttribute("everything", everything);
+			return "/views/createSide.jsp";
 	}
 		sideServ.createOne(access);
 		return String.format("redirect:/serf/show/%s", access.getMainOwner().getId());

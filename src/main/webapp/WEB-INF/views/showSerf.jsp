@@ -51,6 +51,8 @@
 	</table>
 	
 
+	<h3>Owner:</h3>
+	<p><a href="/user/show/${car.owner.id}">${car.owner.firstName} ${car.owner.lastName}</a></p>
 	
 <p><a href="/newSideForm" class="btn btn-primary">Add an accessory</a></p>	
 <h3>Accessories:</h3>
@@ -60,10 +62,13 @@
 		</c:forEach>
 	</ol>
 	
+<h3>Likers:</h3>
+ 	<ol>
+		<c:forEach items="${car.likers}" var="x">
+		<li><a href="/user/show/${x.id}">${x.firstName} ${x.lastName}</a></li>
+		</c:forEach>
+	</ol>	
 	
-	
-	<h3>Owner:</h3>
-	<p><a href="/user/show/${car.owner.id}">${car.owner.firstName} ${car.owner.lastName}</a></p>
 	
 	
 <c:if test="${car.owner.id == userLog.id}">
