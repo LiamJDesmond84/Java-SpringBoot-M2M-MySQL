@@ -56,15 +56,17 @@
 			<form:errors path="transmission" class="text-danger" />
 		</div>
 		<br/>
-
-		<button class="btn btn-warning">Edit</button>
-		
+		<c:if test="${car.owner.id == userLog.id}">
+			<div class="container d-flex flex-row justify-content-center">
+				<button class="btn btn-warning">Update</button>
+				<button onclick="location.href=`/delete/serf/${car.id}`" class="btn btn-danger">Delete</button>
+			</div>
+		</c:if>	
 	</form:form>
 	<hr class="border border-dark" style="width: 600px;"/>
-		<div class="container d-flex flex-row justify-content-center">
+
 			<a href="/serf/show/${car.id}" class="btn btn-primary">Back</a>
-			<button onclick="location.href=`/delete/serf/${car.id}`" class="btn btn-danger">Delete</button>
-		</div>
+
 	</div>
 
 

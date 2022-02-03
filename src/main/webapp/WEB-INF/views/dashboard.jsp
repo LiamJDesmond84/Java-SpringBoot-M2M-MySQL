@@ -22,6 +22,8 @@
 	<div class="container">
 	
 			<button onclick="location.href=`/newSerfForm`" class="btn btn-success mb-2">Add Car</button>
+			<p><a href="/newSideForm" class="btn btn-primary">Add an accessory</a></p>	
+
 		<%--<a href="toys/new">Add Toy</a>--%>
 		<table class="table table-dark">
 			<thead>

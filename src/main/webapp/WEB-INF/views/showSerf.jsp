@@ -92,24 +92,21 @@
 		</c:forEach>
 
 
-		<c:if test="${userRated == false}">
-			<form:form class='card p-3 bg-light' action="/addRating/${car.id}" method="POST" modelAttribute="rating">
+	<c:if test="${userRated == false}">
+		<form:form class='card p-3 bg-light' action="/addRating/${car.id}" method="POST" modelAttribute="rating">
 			<form:label path="rating">Rate</form:label>
 			<form:input type="number" path="rating"/>
 			<br/>
 			<form:errors path="rating" class="text-danger"/>
 			<button>Rate</button>
-			</form:form>
-		</c:if>
+		</form:form>
+	</c:if>
 
 
 
 
 
-<%--Add Side to Main--%>
-<c:if test="${car.owner.id == userLog.id}">
-<p><a href="/newSideForm" class="btn btn-primary">Add an accessory</a></p>	
-</c:if>
+
 
 <%--Show Sides--%>
 <h3>Accessories:</h3>

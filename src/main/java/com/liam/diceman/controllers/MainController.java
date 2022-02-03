@@ -154,8 +154,71 @@ public class MainController {
 		mainServ.deleteOne(id);
 		return "redirect:/dashboard";
 	}
+
+
+//	   ____                __           ____           
+//	  / __ \____  ___     / /_____     / __ \____  ___ 
+//	 / / / / __ \/ _ \   / __/ __ \   / / / / __ \/ _ \
+//	/ /_/ / / / /  __/  / /_/ /_/ /  / /_/ / / / /  __/
+//	\____/_/ /_/\___/   \__/\____/   \____/_/ /_/\___/ 
+//	                                                   
+
 	
-	
+	// Add one to Main Processing
+	@PostMapping("/addOneToOne/{id}")
+	public String addOneToOne(@PathVariable("id") Long id,@Valid @ModelAttribute("title") Title title, BindingResult result, Model model, HttpSession session) {
+		if (result.hasErrors()) {
+			Long userId = (Long) session.getAttribute("user_id");
+
+
+			model.addAttribute("userLog", userServ.getUser(userId));
+			model.addAttribute("car", mainServ.getOne(id));
+			return "views/showSerf.jsp";
+		}
+		soloServ.createOne(title);
+		return "redirect:/serf/show/{id}";
+		
+	}
+
+
+
+
+//	  __  __      _               _ _   _       ___             _         __  __               
+//	 |  \/  |__ _(_)_ _   __ __ _(_) |_| |_    / _ \ _ _  ___  | |_ ___  |  \/  |__ _ _ _ _  _ 
+//	 | |\/| / _` | | ' \  \ V  V / |  _| ' \  | (_) | ' \/ -_) |  _/ _ \ | |\/| / _` | ' \ || |
+//	 |_|  |_\__,_|_|_||_|  \_/\_/|_|\__|_||_|  \___/|_||_\___|  \__\___/ |_|  |_\__,_|_||_\_, |
+//	                                                                                      |__/ 
+
+
+
+
+	// Side form
+	@GetMapping("/newSideForm")
+	public String newSideForm(@ModelAttribute("accessory") Accessory access, Model model, HttpSession session) {	  
+		List<Car> everything = mainServ.getAll();
+		Long userId = (Long) session.getAttribute("user_id");
+		
+		model.addAttribute("userLog", userServ.getUser(userId));
+		model.addAttribute("everything", everything);
+		return "/views/createSide.jsp";
+	}
+
+	// Create Side Processing with MAIN dropdown
+	@PostMapping("/create/side")
+	public String createSide(@Valid @ModelAttribute("accessory") Accessory access, BindingResult result, Model model, HttpSession session) {
+		//  	Long questionId = obj.getQuestion().getId();
+		if(result.hasErrors()) {
+			List<Car> everything = mainServ.getAll();
+			Long userId = (Long) session.getAttribute("user_id");
+			
+			model.addAttribute("userLog", userServ.getUser(userId));
+			model.addAttribute("everything", everything);
+			return "/views/createSide.jsp";
+	}
+		sideServ.createOne(access);
+		return String.format("redirect:/serf/show/%s", access.getMainOwner().getId());
+	}
+
 
 //	 _______                         ______      _______                    
 //	|   |   |.---.-.-----.--.--.    |__    |    |   |   |.---.-.-----.--.--.
@@ -220,70 +283,7 @@ public class MainController {
 		
 	}
 	
-	
 
-//	   ____                __           ____           
-//	  / __ \____  ___     / /_____     / __ \____  ___ 
-//	 / / / / __ \/ _ \   / __/ __ \   / / / / __ \/ _ \
-//	/ /_/ / / / /  __/  / /_/ /_/ /  / /_/ / / / /  __/
-//	\____/_/ /_/\___/   \__/\____/   \____/_/ /_/\___/ 
-//	                                                   
-
-	
-	// Add one to Main Processing
-	@PostMapping("/addOneToOne/{id}")
-	public String addOneToOne(@PathVariable("id") Long id,@Valid @ModelAttribute("title") Title title, BindingResult result, Model model, HttpSession session) {
-		if (result.hasErrors()) {
-			Long userId = (Long) session.getAttribute("user_id");
-
-
-			model.addAttribute("userLog", userServ.getUser(userId));
-			model.addAttribute("car", mainServ.getOne(id));
-			return "views/showSerf.jsp";
-		}
-		soloServ.createOne(title);
-		return "redirect:/serf/show/{id}";
-		
-	}
-	
-
-
-
-//    __  ___      _                   _ __  __       ____                __           __  ___                 
-//   /  |/  /___ _(_)___     _      __(_) /_/ /_     / __ \____  ___     / /_____     /  |/  /___ _____  __  __
-//  / /|_/ / __ `/ / __ \   | | /| / / / __/ __ \   / / / / __ \/ _ \   / __/ __ \   / /|_/ / __ `/ __ \/ / / /
-// / /  / / /_/ / / / / /   | |/ |/ / / /_/ / / /  / /_/ / / / /  __/  / /_/ /_/ /  / /  / / /_/ / / / / /_/ / 
-///_/  /_/\__,_/_/_/ /_/    |__/|__/_/\__/_/ /_/   \____/_/ /_/\___/   \__/\____/  /_/  /_/\__,_/_/ /_/\__, /  
-//                                                                                                    /____/   
-
-
-  
-	// Side form
-	@GetMapping("/newSideForm")
-	public String newSideForm(@ModelAttribute("accessory") Accessory access, Model model, HttpSession session) {	  
-		List<Car> everything = mainServ.getAll();
-		Long userId = (Long) session.getAttribute("user_id");
-		
-		model.addAttribute("userLog", userServ.getUser(userId));
-		model.addAttribute("everything", everything);
-		return "/views/createSide.jsp";
-	}
-
-	// Create Side Processing with MAIN dropdown
-	@PostMapping("/create/side")
-	public String createSide(@Valid @ModelAttribute("accessory") Accessory access, BindingResult result, Model model, HttpSession session) {
-		//  	Long questionId = obj.getQuestion().getId();
-		if(result.hasErrors()) {
-			List<Car> everything = mainServ.getAll();
-			Long userId = (Long) session.getAttribute("user_id");
-			
-			model.addAttribute("userLog", userServ.getUser(userId));
-			model.addAttribute("everything", everything);
-			return "/views/createSide.jsp";
-	}
-		sideServ.createOne(access);
-		return String.format("redirect:/serf/show/%s", access.getMainOwner().getId());
-	}
 	
 //	 ____ ___                    
 //	|    |   \______ ___________ 
@@ -346,48 +346,6 @@ public class MainController {
 	session.invalidate();
 	return "redirect:/";
 	}
-	
-
-//  
-//  // Get all Sides
-//  @RequestMapping("/answers")
-//  public String getAllSides(Model model) {
-//  	
-//  	List<Answer> allSides = mainServ.getAllSides();
-//      model.addAttribute("answers", allSides);
-//      return "/views/others.jsp";
-//  }
-//  
-//  // Get one Side
-//  @RequestMapping("/answers/show/{id}")
-//  public String getOneSide(@PathVariable("id") Long id, Model model) {
-//  	Answer side = mainServ.getOneSide(id);
-//  	Question question = side.getQuestion();
-//  	
-//      // Just testing
-//  	List<Answer> allSideMains = mainServ.getAllSides();
-//      model.addAttribute("answers", allSideMains);
-//  	// End
-//
-//  	model.addAttribute("answer", side);
-//      model.addAttribute("question", question);
-//      return "/views/others.jsp";
-//  }
-//  
-//  
-//  // Delete Side
-//  @RequestMapping(value="/answers/{id}", method=RequestMethod.DELETE)
-//  public String destroySide(@PathVariable("id") Long id) {
-//  	Answer side = mainServ.getOneSide(id);
-//  	Question question = side.getQuestion();
-//  	Question questionId= mainServ.getOne(id);
-//  	mainServ.delete(id);
-//  	
-//  	return String.format("redirect:/questions/%s", questionId.getId());
-////      return "redirect:/questions";
-//  }
-  
-
 
 
 }
