@@ -77,6 +77,28 @@
 		</tbody>
 	</table>
 	
+	<table class="table table-striped mt-2">
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Rating</th>
+			<th>Action</th>
+		</tr>
+	</thead>
+	<tbody>
+		<c:forEach items="${car.ratings}" var="x">
+		<tr>
+			<td>${x.userRating.firstName}</td>
+
+			<td>${x.rating}</td>
+
+			<td><a href="/user/delete/${x.userRating.id}">Delete</a></td>
+		</tr>
+		</c:forEach>
+	</tbody>
+	
+	</table>
+	
 
 	<h3>Owner:</h3>
 	<p><a href="/user/show/${car.owner.id}">${car.owner.firstName} ${car.owner.lastName}</a></p>
@@ -205,7 +227,22 @@
 </c:otherwise>
 </c:choose>
 </div>
-
+<%-- 			<tr>
+				
+					<th scope="row">Rating:</th>
+					<td>
+					<c:set var="avg" value="${0}"/>
+					<c:forEach items="${car.ratings}" var="x">
+					<c:if test="${car.ratings.size() != 0}">
+					<c:set var="avg" value="${avg + x.rating}"/>
+					</c:if>
+					</c:forEach>
+					<c:if test="${avg > 0 }">
+					<c:set var="avg" value="${avg / car.ratings.size()}"/>
+					</c:if>
+					${avg}
+					</td>
+			</tr> --%>
 
 </div>
 </body>

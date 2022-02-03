@@ -343,8 +343,15 @@ public class MainController {
    // Logout User
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
-	session.invalidate();
-	return "redirect:/";
+		session.invalidate();
+		return "redirect:/";
+	}
+	
+	// Delete User
+	@GetMapping("/delete/user/{id}")
+	public String deleteSUser(@PathVariable("id") Long id) {
+		userServ.deleteOne(id);
+		return "redirect:/dashboard";
 	}
 
 

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
+
 import com.liam.diceman.models.LoginUser;
 import com.liam.diceman.models.User;
 import com.liam.diceman.repositories.UserRepository;
@@ -67,5 +68,15 @@ public class UserService {
             return user;
         }
     }
+    
+	// Update
+	public User updateOne(User user) {
+		return userRepo.save(user);
+	}
+	
+	// Delete
+	public void deleteOne(Long id) {
+		userRepo.deleteById(id);
+	}
 
 }
