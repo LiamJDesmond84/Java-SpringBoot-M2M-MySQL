@@ -91,8 +91,13 @@
 			<td>${x.userRating.firstName}</td>
 
 			<td>${x.rating}</td>
-
-			<td><a href="/user/delete/${x.userRating.id}">Delete</a></td>
+<%-- 			<td>
+				<form action="/removeRating/${x.id}">
+				<input type="hidden" name="car" value="${car.id}" />
+				<button class="btn btn-danger">Delete</button>
+				</form>
+			</td> --%>
+ 			<td><a class="btn btn-danger" href="/removeRating/${x.id}">Delete</a></td>
 		</tr>
 		</c:forEach>
 	</tbody>

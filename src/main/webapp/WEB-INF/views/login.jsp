@@ -11,8 +11,13 @@
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
+	 <div class="container d-flex justify-content-center align-items-center justify-content-center">
+	 	<h1>Welcome!</h1>
+	 </div>
 <div class="d-flex">
+
 	 <div class="container d-flex justify-content-center align-items-center">
+
 	    <form:form action="/registerUser" method="post" modelAttribute="newUser">
 	        <div class="form-group">
 	            <label>First Name:</label>

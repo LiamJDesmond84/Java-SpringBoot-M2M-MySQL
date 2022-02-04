@@ -283,6 +283,18 @@ public class MainController {
 		
 	}
 	
+	// Remove Rating
+	@GetMapping("/removeRating/{id}")
+	private String removeRating(@PathVariable("id") Long id) {
+
+//		Long userId = (Long) session.getAttribute("user_id");
+//		rating.setUserRating(userServ.getUser(userId));
+//		rating.setMainRating(mainServ.getOne(id));
+		ratingServ.deleteOne(id);
+		return "redirect:/dashboard";
+		
+	}
+	
 
 	
 //	 ____ ___                    
