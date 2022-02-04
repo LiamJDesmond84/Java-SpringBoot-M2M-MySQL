@@ -13,19 +13,19 @@
 <body>
 
 	<div class="d-flex flex-row align-items-center bg-success text-white">
-	<div class="d-flex justify-content-center flex-column">
+	<div class="d-flex justify-content-center flex-column w-auto">
 	
-		<h4>Logged In:</h4>
+		<h4 class="text-danger">Logged In:</h4>
 		<h4>${userLog.firstName} ${userLog.lastName}</h4>
-		<a class="btn btn-info" href="/logout">Logout</a>
+		<a class="btn btn-info mb-2" href="/logout">Logout</a>
 	</div>
 
-<div class="d-flex justify-content-center flex-column align-items-center col-11">
+<div class="d-flex justify-content-center flex-column align-items-center col-11 w-75">
 <h2>Edit</h2>
 <a class="btn btn-dark" href="/dashboard">Home</a>
-	<hr class="border border-dark" style="width: 600px;"/>
 
-	<hr/>
+
+
 </div>
 </div>
 

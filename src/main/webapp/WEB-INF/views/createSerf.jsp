@@ -11,19 +11,25 @@
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-	<div class="bg-success text-white">
-		<h2>Logged In: ${userLog.firstName} ${userLog.lastName}</h2>
-		<a class="btn btn-info" href="/logout">Logout</a>
-	</div>
-	<div class="d-flex justify-content-center flex-column align-items-center bg-success text-white mb-5">
-		<h2>Add Something:</h2>
-		<a class="btn btn-dark  mb-2" href="/dashboard">Home</a>
-	</div>
+	<div class="d-flex flex-row align-items-center bg-success text-white">
+	<div class="d-flex flex-column col-1 w-auto">
 	
-	
-	<div class="container d-flex flex-column justify-content-center align-items-center">
+		<h4 class="text-danger">Logged In:</h4>
+		<h4>${userLog.firstName} ${userLog.lastName}</h4>
+		<a class="btn btn-info mb-1" href="/logout">Logout</a>
+	</div>
 
-	<form:form action="/create/serf" method="POST" modelAttribute="carForm">
+<div class="d-flex  flex-column align-items-center col-11 w-75">
+<h2>Add Something</h2>
+<a class="btn btn-dark mb-1" href="/dashboard">Home</a>
+
+</div>
+</div>
+	
+
+	<div class="container d-flex flex-column justify-content-center align-items-center mt-2">
+
+	<form:form class='card p-3 bg-light' action="/create/serf" method="POST" modelAttribute="carForm">
 	
 		<div class="form-group">
 			<form:label path="make">Make:</form:label>

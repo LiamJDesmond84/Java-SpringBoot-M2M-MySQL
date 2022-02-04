@@ -92,10 +92,13 @@ public class MainController {
 
 	// Create Serf Form
 	@GetMapping("/newSerfForm")
-	public String newSerfForm(@ModelAttribute("carForm") Car car, HttpSession session) {
+	public String newSerfForm(@ModelAttribute("carForm") Car car, HttpSession session, Model model) {
 		if (session.getAttribute("user_id") == null) {
 			return "redirect:/";
 		}
+		Long userId = (Long) session.getAttribute("user_id");
+		User userLog = userServ.getUser(userId);
+		model.addAttribute("userLog", userLog);
 		return "views/createSerf.jsp";
 	}
 

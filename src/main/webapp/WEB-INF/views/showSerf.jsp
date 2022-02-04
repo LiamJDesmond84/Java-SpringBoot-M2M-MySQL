@@ -12,20 +12,20 @@
 </head>
 <body>
 	<div class="d-flex flex-row align-items-center bg-success text-white">
-	<div class="d-flex justify-content-center flex-column">
+	<div class="d-flex flex-column w-auto">
 	
-		<h4>Logged In:</h4>
+		<h4 class="text-danger">Logged In:</h4>
 		<h4>${userLog.firstName} ${userLog.lastName}</h4>
 		<a class="btn btn-info" href="/logout">Logout</a>
 	</div>
 
-<div class="d-flex justify-content-center flex-column align-items-center col-11">
+<div class="d-flex justify-content-center flex-column align-items-center col-11 w-75">
 <h2>${car.model}'s Info</h2>
-<a class="btn btn-dark" href="/dashboard">Home</a>
+<a class="btn btn-dark mb-1" href="/dashboard">Home</a>
 
 <%--Edit ------------- Delete--%>
 <c:if test="${car.owner.id == userLog.id}">
-	<hr class="border border-dark" style="width: 600px;"/>
+
 	<div class="container d-flex flex-row justify-content-center">
 		<a href="/edit/serf/${car.id}" class="btn btn-warning">Edit</a>
 		<button onclick="location.href=`/delete/serf/${car.id}`" class="btn btn-danger">Delete</button>

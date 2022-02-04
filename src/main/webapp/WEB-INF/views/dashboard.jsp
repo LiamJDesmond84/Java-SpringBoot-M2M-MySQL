@@ -14,8 +14,8 @@
 <body>
 	<div class="bg-success text-white">
 		<h2>Welcome ${userLog.firstName}!</h2>
+	<a href="/logout" class="btn btn-info mb-2">Logout</a>
 	</div>
-	<a href="/logout" class="btn btn-info">Logout</a>
 	<div class="d-flex flex-column justify-content-center align-items-center">
 		<h1>List</h1>
 	</div>
@@ -24,7 +24,7 @@
 			<button onclick="location.href=`/newSerfForm`" class="btn btn-success mb-2">Add Car</button>
 			<p><a href="/newSideForm" class="btn btn-primary">Add an accessory</a></p>	
 
-		<%--<a href="toys/new">Add Toy</a>--%>
+
 		<table class="table table-dark">
 			<thead>
 			<tr>
@@ -75,7 +75,7 @@
 				</c:if>--%>
 				
 				
-<%--RATINGGGGGGGG--%>
+<%--------------------------------        RATINGGGGGGGG--%>
 				<c:choose>
 
 					<c:when test="${x.ratings.isEmpty()}">
@@ -100,7 +100,7 @@
 <%-- ENDDDDD  -----  RATINGGGGGGGG--%>				
 
 
-								<%--If/Else--%>
+								<%--If/Else     LIKES   --%>
 	 			<c:choose>
 
 
