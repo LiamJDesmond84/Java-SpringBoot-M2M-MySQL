@@ -58,6 +58,10 @@
 				<td>${car.transmission}</td>
 			</tr>
 			<tr>
+				<th scope="row">Owner:</th>	
+				<td><a href="/user/show/${car.owner.id}">${car.owner.firstName} ${car.owner.lastName}</a></td>
+			</tr>
+			<tr>
 				
 					<th scope="row">Rating:</th>
 					<td>
@@ -92,10 +96,17 @@
 
 			<td>${x.rating}</td>
 			<td>
+			<c:choose>
+			<c:when test="${userLog == x.userRating}">
 				<form action="/removeRating/${x.id}">
 					<input type="hidden" name="car" value="${car.id}" />
 					<button class="btn btn-danger">Delete</button>
 				</form>
+			</c:when>
+			<c:otherwise>
+			<td></td>
+			</c:otherwise>
+			</c:choose>
 			</td>
 		</tr>
 		</c:forEach>
@@ -104,8 +115,6 @@
 	</table>
 	
 
-	<h3>Owner:</h3>
-	<p><a href="/user/show/${car.owner.id}">${car.owner.firstName} ${car.owner.lastName}</a></p>
 
 <%--Add Ratingggggggg--%>
 
@@ -134,13 +143,7 @@
 
 
 
-<%--Show Sides--%>
-<h3>Accessories:</h3>
- 	<ol>
-		<c:forEach items="${car.accessories}" var="x">
-		<li>${x.name} - ${x.price} - ${x.description}</li>
-		</c:forEach>
-	</ol>
+
 
 <%--Show Many to Many p1--%>	
 <h3>Likers:</h3>
@@ -194,6 +197,13 @@
 
 						<%--If/Else--%>
 <div class="container d-flex flex-column justify-content-center align-items-center">
+<%--Show Sides--%>
+<h3>Accessories:</h3>
+ 	<ol>
+		<c:forEach items="${car.accessories}" var="x">
+		<li>${x.name} - ${x.price} - ${x.description}</li>
+		</c:forEach>
+	</ol>
 <c:choose>
 <c:when test="${ car.title != null }">
 <h2>Tag Details</h2>
