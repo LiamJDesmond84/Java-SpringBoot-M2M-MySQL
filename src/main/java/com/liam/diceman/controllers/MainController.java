@@ -285,13 +285,13 @@ public class MainController {
 	
 	// Remove Rating
 	@GetMapping("/removeRating/{id}")
-	private String removeRating(@PathVariable("id") Long id) {
+	private String removeRating(@PathVariable("id") Long id, @RequestParam("car") Car car) {
 
-//		Long userId = (Long) session.getAttribute("user_id");
-//		rating.setUserRating(userServ.getUser(userId));
-//		rating.setMainRating(mainServ.getOne(id));
+		Long mainId = car.getId();
+		System.out.println(mainId);
+
 		ratingServ.deleteOne(id);
-		return "redirect:/dashboard";
+		return "redirect:/serf/show/" + mainId;
 		
 	}
 	
