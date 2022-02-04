@@ -11,12 +11,15 @@
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-	<div class="bg-success text-white">
-		<h2>Logged In: ${userLog.firstName} ${userLog.lastName}</h2>
+	<div class="d-flex flex-row align-items-center bg-success text-white">
+	<div class="d-flex justify-content-center flex-column">
+	
+		<h4>Logged In:</h4>
+		<h4>${userLog.firstName} ${userLog.lastName}</h4>
 		<a class="btn btn-info" href="/logout">Logout</a>
 	</div>
 
-	<div class="d-flex justify-content-center flex-column align-items-center bg-success text-white">
+<div class="d-flex justify-content-center flex-column align-items-center col-11">
 <h2>${car.model}'s Info</h2>
 <a class="btn btn-dark" href="/dashboard">Home</a>
 
@@ -30,7 +33,7 @@
 </c:if>
 
 	<hr/>
-
+</div>
 </div>
 
 <div class="container d-flex flex-row">
@@ -81,6 +84,27 @@
 		</tbody>
 	</table>
 	
+	<%--Add Ratingggggggg--%>
+
+	<c:set var="userRated" value="false"/>
+	<c:forEach items="${car.ratings}" var="x">
+	<c:if test="${x.userRating == userLog}">
+		<c:set var="userRated" value="true"/>
+		<p>You already gave this a rating</p>
+	</c:if>
+		</c:forEach>
+
+
+	<c:if test="${userRated == false}">
+		<form:form class='card p-3 bg-light' action="/addRating/${car.id}" method="POST" modelAttribute="rating">
+			<form:label path="rating">Rate</form:label>
+			<form:input type="number" path="rating"/>
+			<br/>
+			<form:errors path="rating" class="text-danger"/>
+			<button>Rate</button>
+		</form:form>
+	</c:if>
+	
 	<table class="table table-striped mt-2">
 	<thead>
 		<tr>
@@ -116,26 +140,7 @@
 	
 
 
-<%--Add Ratingggggggg--%>
 
-	<c:set var="userRated" value="false"/>
-	<c:forEach items="${car.ratings}" var="x">
-	<c:if test="${x.userRating == userLog}">
-		<c:set var="userRated" value="true"/>
-		<p>You already gave this a rating</p>
-	</c:if>
-		</c:forEach>
-
-
-	<c:if test="${userRated == false}">
-		<form:form class='card p-3 bg-light' action="/addRating/${car.id}" method="POST" modelAttribute="rating">
-			<form:label path="rating">Rate</form:label>
-			<form:input type="number" path="rating"/>
-			<br/>
-			<form:errors path="rating" class="text-danger"/>
-			<button>Rate</button>
-		</form:form>
-	</c:if>
 
 
 
@@ -192,7 +197,7 @@
 
 
 </div>
-
+</div>
 <%--Add One to One if not existing--%>
 
 						<%--If/Else--%>
@@ -214,7 +219,7 @@
 	
 </c:when>
 <c:otherwise>
-<div class="container">
+
 	<h2>Register This Vehicle:</h2>
 	<form:form action="/addOneToOne/${car.id}" method="POST" modelAttribute="title">
 		<div class="form-group">
@@ -237,7 +242,7 @@
 		<br/>
 		<button>Add Title to ${car.make} ${car.model}</button>
 	</form:form>
-</div>
+
 </c:otherwise>
 </c:choose>
 </div>
@@ -258,6 +263,6 @@
 					</td>
 			</tr> --%>
 
-</div>
+
 </body>
 </html>

@@ -11,14 +11,23 @@
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-	<div class="bg-success text-white">
-		<h2>Logged In: ${userLog.firstName} ${userLog.lastName}</h2>
+
+	<div class="d-flex flex-row align-items-center bg-success text-white">
+	<div class="d-flex justify-content-center flex-column">
+	
+		<h4>Logged In:</h4>
+		<h4>${userLog.firstName} ${userLog.lastName}</h4>
 		<a class="btn btn-info" href="/logout">Logout</a>
 	</div>
-	<div class="d-flex justify-content-center flex-column align-items-center bg-success text-white mb-5">
-		<h2>Edit:</h2>
-		<a class="btn btn-dark" href="/dashboard">Home</a>
-	</div>
+
+<div class="d-flex justify-content-center flex-column align-items-center col-11">
+<h2>Edit</h2>
+<a class="btn btn-dark" href="/dashboard">Home</a>
+	<hr class="border border-dark" style="width: 600px;"/>
+
+	<hr/>
+</div>
+</div>
 
 	
 	<div class="container d-flex flex-column justify-content-center align-items-center">
@@ -59,13 +68,14 @@
 		<c:if test="${car.owner.id == userLog.id}">
 			<div class="container d-flex flex-row justify-content-center">
 				<button class="btn btn-warning">Update</button>
-				<button onclick="location.href=`/delete/serf/${car.id}`" class="btn btn-danger">Delete</button>
+				<a href="/delete/serf/${car.id}" class="btn btn-danger">Delete</a>
 			</div>
 		</c:if>	
 	</form:form>
 	<hr class="border border-dark" style="width: 600px;"/>
 
 			<a href="/serf/show/${car.id}" class="btn btn-primary">Back</a>
+			
 
 	</div>
 
